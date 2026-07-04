@@ -1,0 +1,28 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  validate:
+    name: Validate Types & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup PNPM Environment
+        uses: ./.github/actions/setup-pnpm-env
+        with:
+          node-version: 22
+          frozen-lockfile: "true"
+
+      - name: Run Typechecks
+        run: pnpm typecheck
+
+      - name: Run Linter Verification
+        run: pnpm lint
+
+      - name: Verify All Files Formatting (Prettier)
+        run: pnpm format:check

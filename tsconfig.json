@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./extension" },
+    { "path": "./tsconfig.node.json" },
+
+    { "path": "./studio" },
+    { "path": "./tools" },
+
+    { "path": "./docs" }
+  ]
+}

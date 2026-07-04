@@ -1,0 +1,62 @@
+---
+title: Studio & Ativos Criativos
+sidebar_label: Ativos Criativos
+sidebar_position: 4
+---
+
+### Repositório Central de Criação
+
+O workspace Studio atua como o cofre mestre para todos os ativos criativos da marca Elo Orgânico. Ele centraliza arquivos de origem de suítes de design e produção profissionais, garantindo uma evolução visual controlada por versão e eliminando o gerenciamento fragmentado de ativos.
+
+#### Integração com Ferramentas de Design
+
+O repositório suporta fluxos de trabalho com múltiplas ferramentas, mantendo arquivos de origem brutos que servem como a origem canônica para todos os ativos prontos para produção.
+
+- **Gráficos Vetoriais:** Arquivos mestre do Adobe Illustrator (`.ai`) para logotipos, exploração de tipografia e iconografia.
+- **Imagens Digitais:** Fontes do Adobe Photoshop (`.psd`) para ativos rasterizados de alta fidelidade e material de marketing.
+- **Engenharia 3D:** Arquivos mestre do Blender (`.blend`) para componentes de plataforma e visualizações espaciais (ex: `Avokado.blend`).
+- **Pós-Produção:** Projetos do Adobe Premiere (`.prproj`) para tutoriais da comunidade e conteúdo de marketing.
+
+#### Gerenciamento de Ativos de Origem
+
+Todos os arquivos mestre de alta fidelidade são mantidos estritamente dentro da estrutura do diretório `assets/sources/**`. Isso garante que toda a história da identidade visual da marca seja preservada e acessível dentro do contexto do monorepo.
+
+#### Pipeline de Produção
+
+Os arquivos mestre transitam para as camadas da aplicação através de um pipeline otimizado:
+
+- **Ícones:** As fontes são processadas em SVGs otimizados em `src/icons/`.
+- **Modelos 3D:** Os arquivos mestre do Blender são exportados para o formato GLB para renderização em tempo de execução.
+- **Tokens:** Constantes visuais são exportadas como definições do TypeScript fortemente tipadas de `src/tokens/`.
+
+#### Sincronizador de Ativos Cloudflare R2
+
+Para manter nosso repositório Git leve, ativos estáticos prontos para produção não são commitados diretamente no código-fonte. Em vez disso, eles são gerenciados e sincronizados bidirecionalmente com o Cloudflare R2 Object Storage usando nosso pacote de sincronização CLI dedicado `@elo-studio/assets/bucket`.
+
+##### Sincronização Dinâmica e Verificação
+
+O motor de sincronização utiliza hashing MD5 local e validação de ETag remota para garantir zero operações redundantes.
+
+- **Configuração de Registro:** Os caminhos a sincronizar são configurados dinamicamente em `studio/assets-manifest.json`.
+- **Upload/Push:** Varre ativos locais, valida cabeçalhos e envia arquivos estáticos novos ou modificados para o bucket R2.
+- **Download/Pull:** Verifica metadados remotos, compara com arquivos locais e baixa recursos atualizados.
+
+##### Comandos Operacionais
+
+Execute o CLI interativo Clack diretamente a partir da raiz do monorepo:
+
+```bash
+pnpm studio:bucket
+```
+
+No menu do CLI, escolha **Push** para enviar alterações locais ou **Pull** para baixar os ativos mais recentes.
+
+#### Exportações com Namespace do Workspace
+
+Pacotes internos acessam ativos criativos através de exportações estritamente definidas para garantir o isolamento arquitetônico:
+
+- `@elo-studio/assets/icons`: Biblioteca SVG otimizada e registro de componentes Icon com curadoria (wrapper forwardRef).
+- `@elo-studio/assets/logos`: Logotipos canônicos da marca.
+- `@elo-studio/assets/tokens`: Constantes de design fortemente tipadas para a lógica JS/TS.
+- `@elo-studio/assets/theme.css`: Tema Tailwind CSS v4 sem runtime e resets globais.
+- `@elo-studio/assets/bucket`: Motor de sincronização de ativos e wrappers de cliente compatíveis com S3.

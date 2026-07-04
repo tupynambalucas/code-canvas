@@ -1,0 +1,30 @@
+{
+  "name": "@codecanvas-tools/mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "author": "Tupynambá Lucas Varela Rodrigues <tupynambalucas.dev>",
+  "description": "Elo Orgânico Tools Package",
+  "license": "https://github.com/tupynambalucas/codecanvas/tree/main#license",
+  "homepage": "https://github.com/tupynambalucas/codecanvas/tree/main/tools/mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tupynambalucas/codecanvas.git",
+    "directory": "tools/mcp"
+  },
+  "scripts": {
+    "mcp:up": "docker compose -f infrastructure/docker/compose.yaml up -d",
+    "mcp:down": "docker compose -f infrastructure/docker/compose.yaml down",
+    "mcp:reset": "docker compose -f infrastructure/docker/compose.yaml down --volumes && docker compose -f infrastructure/docker/compose.yaml up -d --build"
+  },
+  "dependencies": {
+    "fastify": "catalog:api-stack",
+    "@fastify/sse": "catalog:api-stack",
+    "@fastify/http-proxy": "catalog:api-stack"
+  },
+  "devDependencies": {
+    "@codecanvas-shared/config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

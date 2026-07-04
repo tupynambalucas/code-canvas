@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "naumovs.color-highlight",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "shd101wyy.markdown-preview-enhanced",
+    "PKief.material-icon-theme",
+    "bradlc.vscode-tailwindcss",
+    "actboy168.tasks",
+    "redhat.vscode-yaml",
+    "github.vscode-github-actions",
+    "styled-components.vscode-styled-components"
+  ],
+  "unwantedRecommendations": []
+}

@@ -1,0 +1,186 @@
+---
+title: Introduction
+description: Project introduction and overview.
+sidebar_position: 1
+---
+
+import DocCardList from "@theme/DocCardList";
+
+# EloOrgânico Project
+
+This project is a specialized management platform designed to bridge the gap between organic producers and conscious consumers through **Scheduled Sharing Cycles**. More than just an e-commerce tool, it is a community-driven management system that automates the complex logistics of seasonal harvests and group buying.
+
+_"To make local, organic, and sustainable food as accessible and easy to purchase as any common industrial product, without losing the human connection."_
+
+## 1. Product Overview & Value Proposition
+
+Before Elo Orgânico, the sharing process was hindered by:
+
+- **Operational Chaos:** Reliance on massive spreadsheets and fragmented WhatsApp messages.
+- **Manual Errors:** Human mistakes in order consolidation and payment tracking.
+- **Scaling Friction:** High administrative overhead made it impossible to grow the community without burnout.
+- **Payment Latency:** Delayed financial reconciliation due to manual checking of bank transfers.
+
+We transform this process into a professional, automated workflow:
+
+| For Consumers                                                                  | For Administrators/Suppliers                                                                |
+| :----------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
+| **Convenience:** A clean, modern shop (`@elo-instance/web`) to browse and buy. | **Automation:** Intelligent parsing of product lists into structured data.                  |
+| **Transparency:** Real-time access to seasonal availability and prices.        | **Efficiency:** Automated order consolidation and stock management via `@elo-instance/api`. |
+| **Speed:** Instant Pix payments with automatic bank reconciliation.            | **Control:** Full visibility over cycles, logistics, and financial health.                  |
+
+### Target Audience (Personas)
+
+1. **The Community Coordinator (Admin):** Manages cycles and suppliers via the administrative features of `@elo-instance/web`.
+2. **The Conscious Consumer:** Shops seasonal products through the `@elo-instance/web` interface.
+3. **The Supplier (Fornecedor):** Acts as the bridge between farmers and the community, providing the seasonal catalog.
+
+## 2. Operational Flowchart
+
+The Elo Orgânico platform orchestrates the following operational flow for a community instance:
+
+1. **Cycle Configuration:** The administrator defines and schedules purchase windows (cycles) through the `@elo-instance/web` admin interface. `[STABLE]`
+2. **Product Ingestion:** A plain text list of products is processed by an **Intelligent Parser** in the frontend. `[WIP - Refining Logic]`
+3. **Opening of Purchases:** The structured catalog is automatically enabled for members in the `@elo-instance/web` shop. `[STABLE]`
+4. **Order Execution:** Members assemble custom baskets and submit their orders. `[STABLE]`
+5. **Payment Processing:** Direct integration with **EFI Bank** API for Pix payments. `[WIP - Technical Specification Stage]`
+6. **Confirmation:** The system performs bank reconciliation and confirms the order automatically. `[WIP]`
+
+## 3. Cost Estimation & Hosting Strategy
+
+The "Self-Hosted" strategy provides a highly favorable and predictable cost-benefit ratio. We propose two primary hosting approaches for the instance.
+
+### Category 1: Infrastructure & Hosting
+
+**Option A: Hetzner Cloud (Fixed VPS)**
+
+- **Strategy:** High-Performance Server (Linux VPS) always on.
+- **Estimated Monthly Cost:** **€5.00 to €7.00** (Fixed).
+- **Database & Cache:** VPS's own resources (MongoDB/Redis) at zero extra cost.
+
+**Option B: Google Cloud Run (Serverless)**
+
+- **Strategy:** Serverless containers, spun up and down on demand.
+- **Estimated Monthly Cost:** **Variable** (Often free tier or cents if idle).
+- **Database & Cache:** Managed DBs (e.g. Atlas/Redis Cloud) or Cloud SQL.
+
+### Category 2: Payment Gateway (Pix)
+
+We have two primary options for processing Pix payments, both offering identical fixed rates per transaction but differing in accessibility.
+
+**Option A: EFI Bank**
+
+- **Pix Fee:** **1.19%** per received transaction via API.
+- **Status:** Fully accessible for Brazilian businesses.
+
+**Option B: Stripe**
+
+- **Pix Fee:** **1.19%** per received transaction via API.
+- **Status:** Currently invite-only for Pix in Brazil, requiring approval or higher volume tiers.
+
+### Category 3: Domain and DNS
+
+- **Cost:** Standard Annual Cost (Domain registration and maintenance). The project domain will be purchased and managed directly through **Cloudflare** for secure DNS resolution and proxy routing.
+
+### Financial Conclusion
+
+Both architectures ensure predictability of infrastructure costs. The Hetzner option provides a fixed, extremely low monthly cost with consistent performance, while the Cloud Run approach minimizes costs during idle periods by turning the instance on and off when needed. For payments, both EFI Bank and Stripe offer competitive 1.19% rates for Pix, though EFI Bank is more immediately accessible.
+
+## 4. Architecture & Bounded Context
+
+We use **PNPM Workspaces** with a **Context-Driven Root** layout to strictly isolate our business domains into Bounded Contexts. The codebase is divided into **Instance** (Community operations) and **Portal** (Global SaaS layer).
+
+For a comprehensive breakdown of our context philosophy, directory structure, and application roles, please read our dedicated architectural guides:
+
+<DocCardList
+  items={[
+    {
+      type: "link",
+      href: "/docs/architecture/bounded-context",
+      label: "Bounded Context Architecture",
+      description:
+        "Detailed explanation of Bounded Contexts, Monorepo Structure, and Application Roles in Elo Orgânico.",
+    },
+    {
+      type: "link",
+      href: "/docs/architecture/overview",
+      label: "Architecture Overview",
+      description:
+        "Comprehensive technical stack and monorepo strategy overview.",
+    },
+  ]}
+/>
+
+## 5. Strategic Focus: Single-Instance Mastery
+
+Our current priority is the **perfect delivery of a standalone community instance (`@elo-instance/*`)**. SaaS development will only commence after the core application is fully operational.
+
+### The Long-Term SaaS Vision
+
+While we are focused on the instance, the long-term goal is to evolve into a Multi-tenant SaaS Platform:
+
+- **Portal Scope (`@elo-portal/web` & `@elo-portal/api`)**: A singleton global entry point for onboarding and discovery.
+- **Multiple Instance Pairs (`@elo-instance/api` & `@elo-instance/web`)**: Each community receives its own isolated environment pair.
+- **Core Libraries (`@elo-instance/core` & `@elo-portal/core`)**: Domain-specific source of truth (SSOT) for each scope.
+
+#### Key SaaS Features
+
+- **Tenant Isolation:** Independent data and configuration for each community instance.
+- **Producer Self-management:** Direct inventory and pricing management for producers.
+- **Subscription Management:** Tiered service levels managed via `@elo-portal/api`.
+
+#### Architectural Evolution
+
+- **Multi-Instance Deployment:** Automated spinning up of `@elo-instance/*` containers per tenant.
+- **Dynamic Routing:** Global load balancer routing users to their specific community instance.
+
+<DocCardList
+  items={[
+    {
+      type: "link",
+      href: "/roadmap",
+      label: "Core Architecture & Strategy",
+      description:
+        "Strategic monorepo architecture, catalog configurations, and logical multi-tenant isolation goals.",
+    },
+  ]}
+/>
+
+## 6. Quick Start
+
+Ensure you have **Node.js 22+**, **PNPM 11+**, and **Docker** installed.
+
+1.  **Install Dependencies:**
+
+    ```bash
+    pnpm install
+    ```
+
+2.  **Set Up Environment Files:**
+    Each bounded context and application has its own environment file. Copy every `.env.*.example` to its non-example counterpart and fill in your local values:
+
+    ```bash
+    # Instance orchestration (for compose)
+    cp instance/infrastructure/docker/.env.example instance/infrastructure/docker/.env
+
+    # Instance API runtime
+    cp instance/services/api/.env.dev.example instance/services/api/.env.dev
+
+    # Instance Web build-time vars
+    cp instance/services/web/.env.dev.example instance/services/web/.env.dev
+
+    # Local databases configuration
+    cp instance/services/mongodb/.env.example instance/services/mongodb/.env.dev
+    cp instance/services/redis/.env.example instance/services/redis/.env.dev
+    ```
+
+    Repeat for `portal/` when working on the Portal context.
+
+3.  **Start Local Infrastructure & Applications:**
+    We provide unified orchestration scripts via Turborepo to spin up Docker containers and local dev servers simultaneously.
+
+    See the [Command Reference](./commands-reference.mdx) for instructions on starting the stack (`pnpm instance:dev`), running validations, or deploying to production.
+
+---
+
+_Last Updated: June 2026_

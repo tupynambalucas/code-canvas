@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Copilot CLI",
+      "type": "shell",
+      "command": "copilot",
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "dedicated",
+        "focus": true,
+        "reveal": "always",
+        "clear": true,
+        "group": "llm-cli-group"
+      },
+      "isBackground": false
+    },
+    {
+      "label": "Antigravity CLI",
+      "type": "shell",
+      "command": "agy",
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "dedicated",
+        "focus": true,
+        "reveal": "always",
+        "clear": true,
+        "group": "llm-cli-group"
+      },
+      "isBackground": false
+    },
+    {
+      "type": "npm",
+      "script": "watch",
+      "problemMatcher": "$tsc-watch",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

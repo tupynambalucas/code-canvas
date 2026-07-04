@@ -1,0 +1,10 @@
+{
+  "extends": "@elo-shared/config/tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist",
+    "rootDir": "."
+  },
+  "include": ["gateway/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

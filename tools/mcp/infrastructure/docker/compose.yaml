@@ -1,0 +1,97 @@
+name: codecanvas-mcp
+
+networks:
+  codecanvas-mcp-net:
+    name: codecanvas-mcp-net
+    driver: bridge
+
+services:
+  gateway:
+    build:
+      context: ../..
+      dockerfile: gateway/Dockerfile
+    container_name: codecanvas-mcp-gateway
+    restart: always
+    environment:
+      - PORT=3005
+    ports:
+      - "3005:3005"
+    networks:
+      codecanvas-mcp-net:
+        aliases:
+          - codecanvas.internal.tools.mcp
+    depends_on:
+      - github
+      - context7
+      - browser
+      - dockerhub
+      - firecrawl
+
+  github:
+    build:
+      context: ../..
+      dockerfile: services/github/Dockerfile
+    container_name: codecanvas-mcp-github
+    restart: always
+    env_file:
+      - ../../services/github/.env.github
+    volumes:
+      - ../../services/github/instructions.md:/app/instructions.md:ro
+    networks:
+      - codecanvas-mcp-net
+
+  context7:
+    build:
+      context: ../..
+      dockerfile: services/context7/Dockerfile
+    container_name: codecanvas-mcp-context7
+    restart: always
+    env_file:
+      - ../../services/context7/.env.context7
+    volumes:
+      - ../../services/context7/instructions.md:/app/instructions.md:ro
+    networks:
+      - codecanvas-mcp-net
+
+  browser:
+    build:
+      context: ../..
+      dockerfile: services/browser/Dockerfile
+    container_name: codecanvas-mcp-browser
+    restart: always
+    env_file:
+      - ../../services/browser/.env.browser
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "codecanvas.internal:host-gateway"
+    shm_size: "2gb"
+    volumes:
+      - ../../services/browser/instructions.md:/app/instructions.md:ro
+    networks:
+      - codecanvas-mcp-net
+
+  dockerhub:
+    build:
+      context: ../..
+      dockerfile: services/dockerhub/Dockerfile
+    container_name: codecanvas-mcp-dockerhub
+    restart: always
+    env_file:
+      - ../../services/dockerhub/.env.dockerhub
+    volumes:
+      - ../../services/dockerhub/instructions.md:/app/instructions.md:ro
+    networks:
+      - codecanvas-mcp-net
+
+  firecrawl:
+    build:
+      context: ../..
+      dockerfile: services/firecrawl/Dockerfile
+    container_name: codecanvas-mcp-firecrawl
+    restart: always
+    env_file:
+      - ../../services/firecrawl/.env.firecrawl
+    volumes:
+      - ../../services/firecrawl/instructions.md:/app/instructions.md:ro
+    networks:
+      - codecanvas-mcp-net

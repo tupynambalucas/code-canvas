@@ -1,0 +1,62 @@
+---
+title: Studio & Creative Assets
+sidebar_label: Creative Assets
+sidebar_position: 4
+---
+
+### Centralized Creative Repository
+
+The Studio workspace acts as the master vault for all creative assets of the Elo Orgânico brand. It centralizes master files from professional design and production suites, ensuring version-controlled visual evolution and eliminating fragmented asset management.
+
+#### Design Tool Integration
+
+The repository supports multi-tool workflows by maintaining raw source files that serve as the canonical origin for all production-ready assets.
+
+- **Vector Graphics:** Adobe Illustrator (`.ai`) master files for logotypes, typography exploration, and iconography.
+- **Digital Imaging:** Adobe Photoshop (`.psd`) sources for high-fidelity raster assets and marketing material.
+- **3D Engineering:** Blender (`.blend`) master files for platform components and spatial visualizations (e.g., `Avokado.blend`).
+- **Post-Production:** Adobe Premiere (`.prproj`) projects for community tutorials and marketing content.
+
+#### Source Asset Management
+
+All high-fidelity master files are strictly maintained within the `assets/sources/**` directory structure. This ensures that the entire history of the brand's visual identity is preserved and accessible within the monorepo context.
+
+#### Production Pipeline
+
+Master files transition to the application layers through an optimized pipeline:
+
+- **Icons:** Sources are processed into optimized SVGs in `src/icons/`.
+- **3D Models:** Blender master files are exported to GLB format for runtime rendering.
+- **Tokens:** Visual constants are exported as strongly-typed TypeScript definitions from `src/tokens/`.
+
+#### Cloudflare R2 Asset Synchronizer
+
+To keep our Git repository lightweight, production-ready static assets are not committed directly to the codebase. Instead, they are managed and synchronized bidirectionally with Cloudflare R2 Object Storage using our dedicated CLI synchronizer package `@elo-studio/assets/bucket`.
+
+##### Dynamic Synchronization & Verification
+
+The synchronization engine uses local MD5 hashing and remote ETag validation to guarantee zero redundant operations.
+
+- **Registry Config:** The paths to sync are configured dynamically in `studio/assets-manifest.json`.
+- **Upload/Push:** Scans local assets, validates headers, and pushes new/modified static files to the R2 bucket.
+- **Download/Pull:** Checks remote metadata, compares with local files, and pulls updated resources.
+
+##### Operational Commands
+
+Run the interactive Clack CLI directly from the root of the monorepo:
+
+```bash
+pnpm studio:bucket
+```
+
+From the CLI menu, choose **Push** to upload local changes or **Pull** to download the latest assets.
+
+#### Namespaced Workspace Exports
+
+Internal packages access creative assets via strictly defined exports to ensure architectural isolation:
+
+- `@elo-studio/assets/icons`: Optimized SVG library and curated Icon component registry (forwardRef wrapper).
+- `@elo-studio/assets/logos`: Canonical brand logotypes.
+- `@elo-studio/assets/tokens`: Strongly-typed design constants for JS/TS logic.
+- `@elo-studio/assets/theme.css`: Zero-runtime Tailwind CSS v4 theme and global resets.
+- `@elo-studio/assets/bucket`: Asset synchronization engine and S3-compatible client wrappers.

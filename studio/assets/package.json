@@ -1,0 +1,58 @@
+{
+  "name": "@codecanvas-studio/assets",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "author": "Tupynambá Lucas Varela Rodrigues <tupynambalucas.dev>",
+  "description": "Elo Orgânico Studio Package",
+  "license": "https://github.com/tupynambalucas/codecanvas/tree/main#license",
+  "homepage": "https://github.com/tupynambalucas/codecanvas/tree/main/studio/assets#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tupynambalucas/codecanvas.git",
+    "directory": "studio/assets"
+  },
+  "files": [
+    "src",
+    "assets-manifest.json"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./assets-manifest.json": "./assets-manifest.json",
+    "./icons": "./src/icons/index.tsx",
+    "./logos": "./src/logos/index.ts",
+    "./logos/*": "./src/logos/*",
+    "./three/*": "./src/three/*",
+    "./images/*": "./src/images/*",
+    "./tupynamba/*": "./src/tupynamba/*",
+    "./tokens": "./src/tokens/index.ts",
+    "./tokens.css": "./src/tokens/tokens.css",
+    "./theme.css": "./src/tokens/theme.css"
+  },
+  "scripts": {
+    "bucket": "tsx bucket/bucket.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@fontsource-variable/nunito": "catalog:studio-stack",
+    "react-icons": "catalog:studio-stack",
+    "react": "catalog:web-stack",
+    "react-dom": "catalog:web-stack",
+    "glob": "catalog:",
+    "dotenv": "catalog:shared-stack",
+    "@aws-sdk/client-s3": "catalog:",
+    "@smithy/node-http-handler": "catalog:",
+    "mime-types": "catalog:",
+    "@clack/prompts": "catalog:"
+  },
+  "devDependencies": {
+    "@codecanvas-shared/config": "workspace:*",
+    "@types/react": "catalog:web-stack",
+    "@types/react-dom": "catalog:web-stack",
+    "typescript": "catalog:",
+    "tailwindcss": "catalog:shared-stack",
+    "@types/glob": "catalog:",
+    "@types/mime-types": "catalog:"
+  }
+}

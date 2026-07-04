@@ -1,0 +1,15 @@
+{
+  "extends": "@codecanvas-shared/config/tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "types": ["mocha", "node"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "paths": {
+      "@extension/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "build.ts", ".vscode-test.ts"],
+  "exclude": ["node_modules", "dist", "out"]
+}

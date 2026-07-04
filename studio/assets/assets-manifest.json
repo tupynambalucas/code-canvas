@@ -1,0 +1,10 @@
+{
+  "bucket": {
+    "assets": {
+      "push": ["/images", "/three", "/raw"],
+      "pull": ["/images", "/three", "/raw"],
+      "docs": ["/three", "/images"],
+      "web": ["/images"]
+    }
+  }
+}

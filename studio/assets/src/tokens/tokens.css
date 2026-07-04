@@ -1,0 +1,60 @@
+@import "@fontsource-variable/nunito/index.css";
+
+/**
+ * Elo Organico - Design Tokens (Pure Theme)
+ * Centralized in @studio to ensure consistency across the monorepo.
+ * This file contains ONLY the @theme block to avoid breaking 
+ * third-party styles with Tailwind's Preflight or global resets.
+ */
+
+@theme {
+  /* --- Font Configuration --- */
+  --font-sans: "Nunito", sans-serif;
+
+  /* --- Main Identity (Brand Triad) --- */
+  --color-identity-primary: #8ea637;
+  --color-identity-secondary: #c9f2ac;
+  --color-identity-tertiary: #022601;
+
+  /* --- Background System (Surfaces) --- */
+  --color-background-light: #f2e8c9;
+  --color-background-dark: #400101;
+  --color-background-tint: #f1f8e9;
+  --color-background-shade: #02590f;
+
+  /* --- Structural Neutrals --- */
+  --color-border-light: #e6dcc3;
+  --color-border-dark: #2c1a1a;
+  --color-disabled: #a89f91;
+  --color-overlay: #022601;
+
+  /* --- Typographic System --- */
+  --color-title-dark: #400101;
+  --color-title-light: #f2e8c9;
+  --color-subtitle-dark: #5c4b3f;
+  --color-subtitle-light: #c9f2ac;
+  --color-body-dark: #212121;
+  --color-body-light: #fbf8f1;
+  --color-label-dark: #6d6d6d;
+  --color-label-light: #a89f91;
+
+  /* --- Feedback Colors --- */
+  --color-accent: #f2622e;
+  --color-highlight: #f2a341;
+  --color-success: #2ecc71;
+  --color-error: #d9042b;
+  --color-warning: #f2c84b;
+  --color-info: #2f80ed;
+
+  /* --- Shadow Colors --- */
+  --color-shadow-float: #400101;
+  --color-shadow-dense: #022601;
+
+  /* --- Iconography --- */
+  --color-icon-primary-dark: #400101;
+  --color-icon-primary-light: #f2e8c9;
+  --color-icon-secondary-dark: #5c4b3f;
+  --color-icon-invert-dark: #f2e8c9;
+  --color-icon-invert-light: #400101;
+  --color-icon-active: #f2622e;
+}

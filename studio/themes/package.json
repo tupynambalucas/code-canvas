@@ -1,0 +1,11 @@
+{
+  "name": "@codecanvas-studio/themes",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "catalog:shared-stack"
+  }
+}

@@ -1,0 +1,9 @@
+**/node_modules/**
+**/dist/**
+**/build/**
+**/.docusaurus/**
+**/.turbo/**
+**/.eslintcache/**
+**/tools/agents/data/**
+**/tools/agents/shared/**
+**/.dockerignore

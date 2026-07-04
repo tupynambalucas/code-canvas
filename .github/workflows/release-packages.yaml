@@ -1,0 +1,31 @@
+name: Manage Version Bumps and Releases
+
+on:
+  push:
+    branches:
+      - develop
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PNPM Environment
+        uses: ./.github/actions/setup-pnpm-env
+        with:
+          node-version: 22
+          frozen-lockfile: "false"
+
+      - name: Process Bumps and Generate Release PR
+        uses: changeset/action@v3
+        with:
+          version: pnpm version:bump
+          commit: "chore(release): bump package versions and update changelogs"
+          title: "chore(release): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,55 @@
+---
+title: Portal Workspace (Global SaaS)
+sidebar_label: Overview
+sidebar_position: 1
+slug: /portal
+---
+
+The Portal workspace serves as the global SaaS Hub and tenant orchestration layer for the Elo Orgânico ecosystem. While the project is currently in the **Single-Instance Mastery** phase (prioritizing standalone community shop delivery), the Portal contains the foundational codebase and infrastructure scripts designed to scale the platform into a multi-tenant subscription network.
+
+## Directory Structure
+
+```
+portal/
+├── apps/
+│   ├── api/          # Fastify 5 Global REST API
+│   └── web/          # React 19 Platform Landing Page & Portal
+├── packages/
+│   └── core/         # Shared Domain Model (Platform SSOT)
+├── compose.dev.yaml  # Developer container stack (MongoDB + Redis)
+└── compose.prod.yaml # Production deployment container stack
+```
+
+## Core Components & Architecture
+
+### `@elo-portal/core` (Platform SSOT)
+
+Coordinates tenant schemas, user subscription plans, and workspace authentication definitions. It maintains separate data models from `instance/` to preserve a clean architectural boundary.
+
+- **Technology Stack**: TypeScript, Mongoose, Zod.
+- **Scope**: Multi-tenant registrations, tenant metadata, and SaaS billing configuration schemas.
+
+### `@elo-portal/api` (Fastify 5 Portal Engine)
+
+Exposes endpoint routers for platform-wide operations: registering new community hubs, authenticating global administrators, and routing payment flows for SaaS plans.
+
+- **Layered Flow**: Uses the standard architecture: `Controller ──> Service ──> Repository ──> Model`
+- **Key Integrations**: Fastify v5 plugins, MongoDB, and Redis instance configurations.
+
+### `@elo-portal/web` (React 19 SaaS Landing Page)
+
+The official landing page and administrative hub where users can sign up, purchase subscriptions, and provision a new community shop instance.
+
+- **Technology Stack**: React 19, Vite, Tailwind CSS v4, Zustand.
+- **Strict Guidelines**: Fully aligned with the `@elo-studio/assets` brand variables and React 19 rendering standards.
+
+## Workspace Scripts
+
+Run these commands from the root directory to manage the Portal context:
+
+| Command            | Action                                                                        |
+| :----------------- | :---------------------------------------------------------------------------- |
+| `pnpm portal:up`   | Spins up local database and Redis cache containers for the Portal stack.      |
+| `pnpm portal:dev`  | Runs the Portal API (via `tsx watch`) and Portal Web (via Vite) concurrently. |
+| `pnpm portal:down` | Stops and removes the Portal Docker container stack.                          |
+| `pnpm portal:prod` | Launches the production-ready Portal stack using production configurations.   |

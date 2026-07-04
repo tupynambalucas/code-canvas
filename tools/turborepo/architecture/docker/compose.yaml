@@ -1,0 +1,17 @@
+name: codecanvas-turborepo
+
+services:
+  cache:
+    build:
+      context: ../..
+      dockerfile: services/cache/Dockerfile
+    container_name: codecanvas-turborepo-cache
+    ports:
+      - "${PORT:-3008}:3000"
+    env_file:
+      - ../../services/cache/.env.cache
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+    volumes:
+      - ../data/cache:/data/codecanvas-organico
+    restart: unless-stopped

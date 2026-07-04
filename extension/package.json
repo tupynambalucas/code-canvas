@@ -1,0 +1,94 @@
+{
+  "name": "@codecanvas/extension",
+  "publisher": "tupynambalucasdev",
+  "displayName": "CodeCanvas",
+  "description": "Freedoom",
+  "version": "1.0.0",
+  "main": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Themes"
+  ],
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codecanvas.install",
+        "title": "CodeCanvas: Install / Enable"
+      },
+      {
+        "command": "codecanvas.uninstallPatch",
+        "title": "CodeCanvas: Uninstall Patch"
+      },
+      {
+        "command": "codecanvas.disable",
+        "title": "CodeCanvas: Disable"
+      },
+      {
+        "command": "codecanvas.info",
+        "title": "CodeCanvas: Info"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "CodeCanvas",
+      "properties": {
+        "codecanvas.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/Disable CodeCanvas backgrounds."
+        },
+        "codecanvas.ui": {
+          "type": "object",
+          "default": {},
+          "description": "Unified UI configuration for CodeCanvas."
+        }
+      }
+    },
+    "themes": [
+      {
+        "id": "codecanvas.bleach-yoruichi-dark-purple",
+        "label": "Yoruichi (Bleach) - Dark Purple",
+        "uiTheme": "vs-dark",
+        "path": "./src/themes/anime.bleach.yoruichi.dark-purple.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "pnpm run clean && pnpm run typecheck && pnpm run lint && tsx build.ts",
+    "package": "pnpm run clean && pnpm run typecheck && pnpm run lint && tsx build.ts --production",
+    "pretest": "pnpm run clean && pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "watch:build": "tsx build.ts --watch",
+    "test": "vscode-test",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@vscode/sudo-prompt": "catalog:",
+    "stylis": "catalog:",
+    "uglify-js": "catalog:"
+  },
+  "devDependencies": {
+    "@codecanvas-shared/config": "workspace:*",
+    "@types/mocha": "catalog:",
+    "@types/vscode": "catalog:",
+    "@vscode/test-cli": "catalog:",
+    "@vscode/test-electron": "catalog:",
+    "@types/stylis": "catalog:",
+    "@types/uglify-js": "catalog:",
+    "@vscode/vsce": "catalog:",
+    "esbuild": "catalog:",
+    "npm-run-all": "catalog:",
+    "tsx": "catalog:"
+  }
+}
