@@ -3,7 +3,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const kbPkgPath = require.resolve("@code-canvas/docs/package.json");
+const kbPkgPath = require.resolve("@codecanvas/docs/package.json");
 const kbDir = path.dirname(kbPkgPath);
 
 const RELEASES_DIR = path.join(kbDir, "releases");

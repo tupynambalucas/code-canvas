@@ -120,7 +120,7 @@ Running a full typecheck across all monorepo packages (`pnpm typecheck`) can tak
    - Files in `extension/` $\rightarrow$ typecheck `@codecanvas/*` packages.
    - Files in `studio/` $\rightarrow$ typecheck `@codecanvas-studio/assets`.
    - Files in `tools/` $\rightarrow$ typecheck `@code-canvas/tools`.
-   - Files in `docs/` $\rightarrow$ typecheck `@code-canvas/docs`.
+   - Files in `docs/` $\rightarrow$ typecheck `@codecanvas/docs`.
    - Files in `studio/` $\rightarrow$ typecheck `@codecanvas/*`.
 4. If global configuration or root files (e.g. `package.json`, `eslint.config.ts`, `pnpm-workspace.yaml`) are modified, the script runs a full typecheck (excluding `studio` until it is updated).
 5. It executes the targeted typecheck in parallel using Turborepo filters (e.g., `npx turbo run typecheck --filter=@codecanvas/*`).

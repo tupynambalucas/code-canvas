@@ -120,7 +120,7 @@ Rodar a checagem completa de tipos em todas as aplicações (`pnpm typecheck`) a
    - Alterações em `extension/` $\rightarrow$ typecheck de `@codecanvas/*`.
    - Alterações em `studio/` $\rightarrow$ typecheck de `@codecanvas-studio/assets`.
    - Alterações em `tools/` $\rightarrow$ typecheck de `@code-canvas/tools`.
-   - Alterações em `docs/` $\rightarrow$ typecheck de `@code-canvas/docs`.
+   - Alterações em `docs/` $\rightarrow$ typecheck de `@codecanvas/docs`.
    - Alterações em `studio/` $\rightarrow$ typecheck de `@codecanvas/*`.
 4. Se arquivos de configuração global ou de raiz (como `package.json`, `eslint.config.ts`, `pnpm-workspace.yaml`) forem alterados, o script executa um typecheck completo (excluindo `studio` temporariamente).
 5. Executa as validações filtradas em paralelo utilizando o Turborepo (ex: `npx turbo run typecheck --filter=@codecanvas/*`).

@@ -1,41 +1,41 @@
-# Change Log
+# Changelog
 
-All notable changes to the "CodeCanvas" extension will be documented in this file.
+All updates, improvements, and new features of CodeCanvas documented in the Docs.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+## v0.1.0 - Architecture Foundation & Monorepo Genesis (2026-05-05)
 
-## [Unreleased]
+The foundational release of CodeCanvas (v0.1.0) establishes the core monorepo architecture, workspace isolation boundaries, and domain foundations for the local community shop and global platform hub.
 
-### DOC
+{/* truncate */}
 
-- Improved and clarified documentation across `README.md`, `CONFIG.md`, `CONTEXT.md`, and `VSCODE_API.md` to ensure consistency and accuracy, especially regarding the `secondarybar` vs `secondaryView` naming convention.
-- Corrected the configuration structure for Fullscreen Mode in `CONFIG.md` and `README.md` to properly nest settings under `background.fullscreen`.
-- Clarified in `CONFIG.md` and `README.md` that for the **Editor**, CSS properties like `opacity`, `background-size`, and `background-position` must be placed inside the `style` object, whereas other areas use top-level properties.
+### Monorepo Architecture & Bounded Contexts
 
-- Initial release
+- **Workspace Segregation**: Structured the monorepo using PNPM Workspaces v11 and Turborepo to segregate domains, local tooling, and design systems.
+- **Strict Bounded Contexts**: Enforced absolute separation of concerns between `extension` and `studio` code bases. Cross-workspace imports are restricted via static analysis (ESLint and TypeScript compiler constraints).
+- **Domain Core First**: Established `packages/core` within each context as the Single Source of Truth (SSOT) for data models, validation schemas, and interfaces, ensuring API and web interfaces compile against a shared type registry.
+- **Unified Dependency Management**: Implemented PNPM Catalogs to maintain version consistency for all third-party dependencies across the workspace packages.
 
-## [1.0.0] - 2026-01-08
+### Extension Workspace (Community Shop)
 
-### Added
+- **Layered Backend Architecture**: Implemented the Fastify v5 API server (`@codecanvas/extension`) leveraging a strict layered architecture (`Controller -> Service -> Repository -> Model`).
+- **Domain Implementation**: Completed initial modules for:
+  - `auth`: JWT-based session state and credential verification.
+  - `product`: Local catalog schema and inventories.
+  - `cycle`: Governance structures for community sharing/cooperative agricultural cycles.
+- **Frontend Workspace**: Created `@codecanvas/extension` using React 19, featuring styled interfaces with CSS Modules, routing for client views, and integration with the backend API. It features modules for authentication, user dashboard, shop checkout, and local administration.
 
-- **Unified Background System**: Centralized configuration under `codecanvas.ui` for a streamlined user experience.
-- **Fullscreen Mode**: Apply a single global background to the entire VS Code window.
-- **Sectioned Mode**: Configure different backgrounds for `editor`, `sidebar`, `panel`, and the newly added `secondarybar` (Secondary View).
-- **Image Carousel**: Support for multiple images with interval-based rotation and random order.
-- **Theme Integration**: Themes can now include a `backgroundConfig` key to provide their own default background settings, which are applied automatically when the theme is selected.
-- **Commands**: Added a full suite of commands for managing the extension:
-  - `CodeCanvas: Install / Enable`: Installs or enables the background patches.
-  - `CodeCanvas: Uninstall Patch`: Safely removes all modifications.
-  - `CodeCanvas: Disable`: Temporarily disables backgrounds without uninstalling.
-  - `CodeCanvas: Info`: Checks if the patch is currently installed.
-- **Secondary View Support**: Added background support for the secondary side bar (config key: `secondarybar`).
+### studio Workspace (Global SaaS Hub)
 
-### Changed
+- **Base Infrastructure**: Structured the studio workspace skeleton (`@codecanvas/extension`, `@codecanvas/extension`, and `@codecanvas/extension`).
+- **Authentication Skeleton**: Implemented the `auth` domain skeleton for studio accounts, establishing the architectural precedent for upcoming global SaaS modules.
 
-- **Patching Mechanism**: Improved the file patching logic to be more reliable and to handle administrator permissions gracefully using `sudo-prompt`.
-- **Configuration**: Migrated from multiple individual settings to a single `codecanvas.ui` object for all UI-related configurations.
+### Studio & Branding Assets
 
-### Fixed
+- **Design Tokens**: Standardized colors, spacing, typography, and visual assets in `@codecanvas-studio/assets` to export a unified theme.
+- **Design Ops Integration**: Deployed a self-hosted Penpot extension to maintain visual strategy designs and design-to-code asset generation.
 
-- **Checksum Warning**: Implemented a patch to hide the "Your Code installation appears to be corrupt" warning that appears after modifying the workbench file.
-- **Path Handling**: Improved logic for resolving VS Code's internal file paths across different platforms and versions (including Cursor).
+### Development Tooling & Context Gateways
+
+- **Orchestrated Environments**: Configured localized development stacks utilizing Docker Compose to provision services (Infra, API, and Web) cleanly with unified environment files.
+- **Model Context Protocol (MCP)**: Implemented an SSE-based Fastify gateway providing containerized LLM client integration with the workspace context, exposing GitHub API, Context7 documentation query, Playwright Browser automation, and Docker Hub registry interfaces.
+- **CodeCanvas Docs Docs**: Configured Docusaurus as the central developer studio for architectural references, guides, and style guides.
