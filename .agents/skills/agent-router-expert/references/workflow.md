@@ -9,7 +9,7 @@ This reference defines the verification steps required when creating, updating, 
 ### A. Directory Depth Check
 
 - Ensure that the local `AGENTS.md` is placed precisely at the workspace root or Bounded Context directory root.
-- Validate that all relative links (`[label](./path)`) resolve correctly by checking the path depth (e.g. from `instance/apps/api/AGENTS.md`, the root is reached via `../../../`).
+- Validate that all relative links (`[label](./path)`) resolve correctly by checking the path depth (e.g. from `extension/apps/api/AGENTS.md`, the root is reached via `../../../`).
 
 ### B. Catalog Alignment
 

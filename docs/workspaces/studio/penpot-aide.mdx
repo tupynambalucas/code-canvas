@@ -6,7 +6,7 @@ sidebar_position: 3
 
 ### Self-Hosted Design Engineering
 
-Elo Orgânico utilizes a distributed Penpot stack integrated with Aide, an AI-native engineering assistant. This configuration ensures absolute data sovereignty and automated synchronization between design layers and the codebase.
+CodeCanvas utilizes a distributed Penpot stack integrated with Aide, an AI-native engineering assistant. This configuration ensures absolute data sovereignty and automated synchronization between design layers and the codebase.
 
 #### Infrastructure Architecture
 
@@ -37,7 +37,7 @@ Aide functions as a Model Context Protocol (MCP) bridge, enabling AI agents to i
 
 ##### Mandatory AI Manipulation Rules
 
-- **Component Reuse:** Always check the existing component library (Penpot) or the UI library (`instance/apps/web/src/components`) before creating new elements. Aide must prioritize existing design system tokens and components.
+- **Component Reuse:** Always check the existing component library (Penpot) or the UI library (`extension/apps/web/src/components`) before creating new elements. Aide must prioritize existing design system tokens and components.
 - **Token-First Logic:** Design-to-code exports must strictly utilize CSS Custom Properties derived from `src/tokens/` for colors, fonts, and spacing.
-- **SVG Optimization:** Ensure exported SVG code is optimized, follows the project's icon standards, and is integrated via the `@elo-studio/assets/icons` registry.
+- **SVG Optimization:** Ensure exported SVG code is optimized, follows the project's icon standards, and is integrated via the `@codecanvas-studio/assets/icons` registry.
 - **Layer Hierarchy:** Maintenance of semantic grouping is mandatory. Elements must be organized into clear pages and frames (e.g., `Layout/Grid`, `Components/Buttons`).

@@ -146,7 +146,7 @@ For scanned PDFs requiring OCR, use pdf2image with pytesseract instead.
 
 ### Favor procedures over declarations
 
-A skill should teach the agent *how to approach* a class of problems, not *what to produce* for a specific instance. Compare:
+A skill should teach the agent *how to approach* a class of problems, not *what to produce* for a specific extension. Compare:
 
 ```markdown
 <!-- Specific answer — only useful for this exact task -->

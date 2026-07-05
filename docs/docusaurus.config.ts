@@ -1,6 +1,6 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
-import type { EloPresetOptions, ThemeConfig } from "./elo-preset";
+import type { EloPresetOptions as PresetOptions, ThemeConfig } from "./codecanvas-preset";
 import path from "node:path";
 import fs from "node:fs";
 import { createRequire } from "node:module";
@@ -16,26 +16,26 @@ interface WebpackMock {
 
 const webpack = require("webpack") as unknown as WebpackMock;
 const studioPath = path.dirname(
-  require.resolve("@elo-studio/assets/package.json"),
+  require.resolve("@codecanvas-studio/assets/package.json"),
 );
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: "Elo Orgânico",
-  tagline: "Professional management for a sustainable organic economy.",
+  title: "CodeCanvas",
+  tagline: "Dynamic background customization for VS Code.",
   favicon: "logos/logo-mark-positive-favicon.ico",
 
   // Set the production url of your site here
-  url: "https://elo-docs.pages.dev",
+  url: "https://tupynambalucas.github.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/",
+  baseUrl: "/code-canvas/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "tupynambalucas", // Usually your GitHub org/user name.
-  projectName: "elo-organico", // Usually your repo name.
+  projectName: "code-canvas", // Usually your repo name.
 
   onBrokenLinks: "throw",
 
@@ -100,7 +100,7 @@ const config: Config = {
         const hasBucketUrl = bucketUrl !== undefined && bucketUrl !== "";
 
         const manifestPath =
-          require.resolve("@elo-studio/assets/assets-manifest.json");
+          require.resolve("@codecanvas-studio/assets/assets-manifest.json");
         const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8")) as {
           bucket: { assets: { docs: string[] } };
         };
@@ -109,7 +109,7 @@ const config: Config = {
           .map((f: string) => f.replace(/^\//, ""))
           .join("|");
         const matchRegex = new RegExp(
-          `^@elo-organico\\/studio\\/(${folderPattern})\\/.*`,
+          `^@codecanvas-studio\\/(${folderPattern})\\/.*`,
         );
 
         // Heavy/3D assets rule so Webpack can resolve direct imports of .exr/.glb files
@@ -186,7 +186,7 @@ const config: Config = {
 
   presets: [
     [
-      "./elo-preset/index.ts",
+      "./codecanvas-preset/index.ts",
       {
         docs: {
           path: "handbook",
@@ -197,7 +197,7 @@ const config: Config = {
           routeBasePath: "changelog",
           blogTitle: "Changelog",
           blogDescription:
-            "Acompanhe as últimas atualizações, melhorias e correções do Elo Orgânico.",
+            "Acompanhe as últimas atualizações, melhorias e correções do CodeCanvas.",
           blogSidebarTitle: "Todas as versões",
           blogSidebarCount: "ALL",
           showReadingTime: true,
@@ -222,7 +222,7 @@ const config: Config = {
         theme: {
           customCss: ["./src/css/custom.css"],
         },
-      } satisfies EloPresetOptions,
+      } satisfies PresetOptions,
     ],
   ],
 
@@ -235,9 +235,9 @@ const config: Config = {
       respectPrefersColorScheme: false,
     },
     navbar: {
-      title: "EloDocs",
+      title: "CodeCanvas Docs",
       logo: {
-        alt: "Elo Orgânico Logo",
+        alt: "CodeCanvas Logo",
         src: "logos/logo-mark-negative.svg",
       },
       items: [
@@ -255,7 +255,7 @@ const config: Config = {
           position: "right",
         },
         {
-          href: "https://github.com/tupynambalucas/elo-organico",
+          href: "https://github.com/tupynambalucas/code-canvas",
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository",
@@ -297,12 +297,12 @@ const config: Config = {
               to: "/workspaces/tools",
             },
             {
-              label: "Instance (Shop)",
-              href: "https://github.com/tupynambalucas/elo-organico",
+              label: "Extension",
+              to: "/workspaces/extension/intro",
             },
             {
-              label: "Portal (SaaS)",
-              href: "https://github.com/tupynambalucas/elo-organico",
+              label: "Studio Themes",
+              to: "/workspaces/studio/themes",
             },
           ],
         },
@@ -322,9 +322,9 @@ const config: Config = {
       ],
       copyright: `
         <div class="footer__banner-container">
-          <img src="/logos/logo-horizontal-positive.svg" alt="Elo Orgânico" class="footer__banner" />
+          <img src="/logos/logo-horizontal-positive.svg" alt="CodeCanvas" class="footer__banner" />
         </div>
-        <p>Copyright © ${new Date().getFullYear()} Elo Orgânico. Professional management for a sustainable organic economy. Built with Docusaurus.</p>
+        <p>Copyright © ${new Date().getFullYear()} CodeCanvas. Dynamic background customization for VS Code. Built with Docusaurus.</p>
       `,
     },
     prism: {

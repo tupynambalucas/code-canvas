@@ -1,6 +1,6 @@
 ---
 title: Fonte Única de Verdade (SSOT)
-description: Desacoplamento e governança centralizada de esquemas e modelos compartilhados no monorepo do Elo Orgânico.
+description: Desacoplamento e governança centralizada de esquemas e modelos compartilhados no monorepo do CodeCanvas.
 ---
 
 # Fonte Única de Verdade (SSOT)
@@ -23,19 +23,19 @@ Ao centralizar os esquemas centrais, nós:
 
 ## 2. Utilização Específica no Projeto
 
-No Elo Orgânico, o princípio SSOT é implementado nativamente através da nossa arquitetura de monorepo:
+No CodeCanvas, o princípio SSOT é implementado nativamente através da nossa arquitetura de monorepo:
 
 ### A. Bibliotecas Core Centralizadas
 
-Os workspaces `@elo-instance/core` e `@elo-portal/core` servem como a SSOT absoluta para seus respectivos contextos delimitados (bounded contexts). Qualquer esquema, interface ou tipo compartilhado por mais de uma aplicação (como a API do backend e o SPA web do frontend) deve ser declarado aqui primeiro, seguindo nossa diretriz de **Design Orientado ao Core Primeiro**.
+Os workspaces `@codecanvas/extension` e `@codecanvas/extension` servem como a SSOT absoluta para seus respectivos contextos delimitados (bounded contexts). Qualquer esquema, interface ou tipo compartilhado por mais de uma aplicação (como a API do backend e o SPA web do frontend) deve ser declarado aqui primeiro, seguindo nossa diretriz de **Design Orientado ao Core Primeiro**.
 
 ### B. Compartilhamento de Contratos e Tipos
 
-Aplicações downstream como `@elo-instance/api` (Fastify) e `@elo-instance/web` (React SPA) não mantêm cópias de interfaces de DTO (Data Transfer Object) ou modelos de banco de dados. Em vez disso, elas importam tipos, interfaces e classes diretamente do pacote core compartilhado:
+Aplicações downstream como `@codecanvas/extension` (Fastify) e `@codecanvas/extension` (React SPA) não mantêm cópias de interfaces de DTO (Data Transfer Object) ou modelos de banco de dados. Em vez disso, elas importam tipos, interfaces e classes diretamente do pacote core compartilhado:
 
 ```typescript
 // Definição no pacote Core
-// instance/packages/core/src/domains/cycle/cycle.types.ts
+// extension/packages/core/src/domains/cycle/cycle.types.ts
 export interface ICycle {
   id: string;
   name: string;
@@ -47,8 +47,8 @@ export interface ICycle {
 
 ```typescript
 // Consumido diretamente na API a jusante (downstream)
-// instance/apps/api/src/domains/cycle/cycle.service.ts
-import type { ICycle } from "@elo-instance/core";
+// extension/apps/api/src/domains/cycle/cycle.service.ts
+import type { ICycle } from "@codecanvas/extension";
 ```
 
 ### C. Consistência de Esquemas de Validação

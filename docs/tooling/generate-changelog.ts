@@ -3,14 +3,14 @@ import path from "node:path";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const kbPkgPath = require.resolve("@elo-organico/docs/package.json");
+const kbPkgPath = require.resolve("@code-canvas/docs/package.json");
 const kbDir = path.dirname(kbPkgPath);
 
 const RELEASES_DIR = path.join(kbDir, "releases");
 const CHANGELOG_PATH = path.join(kbDir, "../CHANGELOG.md");
 
 function generateChangelog(): void {
-  console.info("🔄 Verifying release notes in the knowledge base...");
+  console.info("🔄 Verifying release notes in the docs...");
 
   if (fs.existsSync(RELEASES_DIR) === false) {
     console.error(`❌ Release directory not found: ${RELEASES_DIR}`);
@@ -31,7 +31,7 @@ function generateChangelog(): void {
   }
 
   let changelogContent =
-    "# Changelog\n\nAll updates, improvements, and new features of Elo Orgânico documented in the Knowledge Base.\n\n";
+    "# Changelog\n\nAll updates, improvements, and new features of CodeCanvas documented in the Docs.\n\n";
   const entries: string[] = [];
 
   for (const file of files) {

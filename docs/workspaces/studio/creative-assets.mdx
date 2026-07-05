@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ### Centralized Creative Repository
 
-The Studio workspace acts as the master vault for all creative assets of the Elo Orgânico brand. It centralizes master files from professional design and production suites, ensuring version-controlled visual evolution and eliminating fragmented asset management.
+The Studio workspace acts as the master vault for all creative assets of the CodeCanvas brand. It centralizes master files from professional design and production suites, ensuring version-controlled visual evolution and eliminating fragmented asset management.
 
 #### Design Tool Integration
 
@@ -31,7 +31,7 @@ Master files transition to the application layers through an optimized pipeline:
 
 #### Cloudflare R2 Asset Synchronizer
 
-To keep our Git repository lightweight, production-ready static assets are not committed directly to the codebase. Instead, they are managed and synchronized bidirectionally with Cloudflare R2 Object Storage using our dedicated CLI synchronizer package `@elo-studio/assets/bucket`.
+To keep our Git repository lightweight, production-ready static assets are not committed directly to the codebase. Instead, they are managed and synchronized bidirectionally with Cloudflare R2 Object Storage using our dedicated CLI synchronizer package `@codecanvas-studio/assets/bucket`.
 
 ##### Dynamic Synchronization & Verification
 
@@ -55,8 +55,8 @@ From the CLI menu, choose **Push** to upload local changes or **Pull** to downlo
 
 Internal packages access creative assets via strictly defined exports to ensure architectural isolation:
 
-- `@elo-studio/assets/icons`: Optimized SVG library and curated Icon component registry (forwardRef wrapper).
-- `@elo-studio/assets/logos`: Canonical brand logotypes.
-- `@elo-studio/assets/tokens`: Strongly-typed design constants for JS/TS logic.
-- `@elo-studio/assets/theme.css`: Zero-runtime Tailwind CSS v4 theme and global resets.
-- `@elo-studio/assets/bucket`: Asset synchronization engine and S3-compatible client wrappers.
+- `@codecanvas-studio/assets/icons`: Optimized SVG library and curated Icon component registry (forwardRef wrapper).
+- `@codecanvas-studio/assets/logos`: Canonical brand logotypes.
+- `@codecanvas-studio/assets/tokens`: Strongly-typed design constants for JS/TS logic.
+- `@codecanvas-studio/assets/theme.css`: Zero-runtime Tailwind CSS v4 theme and global resets.
+- `@codecanvas-studio/assets/bucket`: Asset synchronization engine and S3-compatible client wrappers.

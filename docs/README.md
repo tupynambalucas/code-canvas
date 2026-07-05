@@ -1,6 +1,6 @@
-# @codecanvas/docs - Documentation Hub (EloDocs)
+# @codecanvas/docs - Documentation Hub (CodeCanvas Docs)
 
-This is the central, authoritative documentation hub for the CodeCanvas project. Built with Docusaurus v3, it provides a high-performance, strictly-typed technical and product knowledge base.
+This is the central, authoritative documentation hub for the CodeCanvas project. Built with Docusaurus v3, it provides a high-performance, strictly-typed technical and product docs.
 
 ## Structure & Content
 

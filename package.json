@@ -8,10 +8,6 @@
       "version": "11.9.0"
     }
   },
-  "workspaces": [
-    "themes",
-    "extension"
-  ],
   "scripts": {
     "// Docs": "---------------------------------------------",
     "docs:typecheck": "pnpm --filter @codecanvas/docs typecheck",

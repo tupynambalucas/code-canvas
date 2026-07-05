@@ -3,9 +3,9 @@ title: Integração de IA
 sidebar_label: Integração de IA
 ---
 
-# Integração de IA no Elo Orgânico
+# Integração de IA no CodeCanvas
 
-A plataforma **Elo Orgânico** é construída desde o início para suportar fluxos de trabalho de engenharia nativos de IA. Em vez de tratar os agentes de IA como ferramentas de chat externas, o monorepo fornece uma infraestrutura conteinerizada que monta ambientes de código diretamente para os LLMs, conecta o hub de design aos agentes via Model Context Protocol (MCP) e garante a paridade do sistema entre os runtimes do host e dos containers.
+A plataforma **CodeCanvas** é construída desde o início para suportar fluxos de trabalho de engenharia nativos de IA. Em vez de tratar os agentes de IA como ferramentas de chat externas, o monorepo fornece uma infraestrutura conteinerizada que monta ambientes de código diretamente para os LLMs, conecta o hub de design aos agentes via Model Context Protocol (MCP) e garante a paridade do sistema entre os runtimes do host e dos containers.
 
 ---
 
@@ -27,14 +27,14 @@ O ecossistema MCP fornece um gateway unificado e seguro que permite aos agentes 
 
 ### Componentes Arquiteturais
 
-- **Fastify SSE Gateway (`elo-mcp-gateway`)**: Expõe endpoints HTTP internos que representam cada servidor MCP. Ele coordena o roteamento de rede na porta `3005` (host) e na porta `3000` (rede de bridge interna).
+- **Fastify SSE Gateway (`codecanvas-mcp-gateway`)**: Expõe endpoints HTTP internos que representam cada servidor MCP. Ele coordena o roteamento de rede na porta `3005` (host) e na porta `3000` (rede de bridge interna).
 - **Adaptores SSE Zero-Dependency**: Servidores padrão baseados em entrada/saída padrão (stdio) são envelopados em adaptadores Fastify customizados (`sse-adapter.ts`) para transmitir mensagens JSON-RPC bidirecionalmente através de HTTP Server-Sent Events.
 
 ### Servidores Configurados
 
 1.  **Servidor MCP do GitHub**: Permite que os agentes coordenem branches, commits e pull requests diretamente do workspace.
 2.  **Servidor MCP do Context7**: Consulta documentação externa em tempo real para dependências do projeto (Fastify 5, React 19) para garantir precisão.
-3.  **Servidor MCP do Browser (Playwright)**: Inicia uma instância de Chrome headless para executar auditorias de UI, capturar screenshots e testar frontends.
+3.  **Servidor MCP do Browser (Playwright)**: inicia uma janela de Chrome headless para executar auditorias de UI, capturar screenshots e testar frontends.
 4.  **Servidor MCP do Docker Hub**: Valida tags do Docker upstream e atualiza manifestos de containers.
 
 :::info[Configuração Detalhada]
@@ -80,7 +80,7 @@ A geração de design-to-code por IA deve respeitar as seguintes regras:
 
 - **Design Baseado em Tokens**: Elementos de cores exportados devem referenciar propriedades CSS personalizadas definidas em `src/tokens/`.
 - **Otimização de SVGs**: SVGs vetoriais devem ser compilados no registro central de wrappers de componentes do Studio.
-- **Reuso de Componentes**: Priorize componentes React existentes em `@elo-instance/web` antes de gerar novos elementos visuais.
+- **Reuso de Componentes**: Priorize componentes React existentes em `@codecanvas/extension` antes de gerar novos elementos visuais.
 
 :::info[Instalação Detalhada]
 Para obter as etapas detalhadas de instalação, diagramas de arquitetura, listas de comandos e regras obrigatórias de reutilização de componentes e tokens, consulte o **[Guia de Configuração do Workspace Studio (Ativos Criativos e Penpot)](../../workspaces/studio)**.

@@ -13,8 +13,8 @@ A clear and concise description of the bug.
 
 Please specify the affected workspace(s):
 
-- [ ] `instance` (Community Instance)
-- [ ] `portal` (SaaS Platform Portal)
+- [ ] `extension` (Extension)
+- [ ] `studio` (Studio)
 - [ ] `studio` (Design Tokens / Penpot / Assets)
 - [ ] `tools` (MCP servers / automation CLI)
 - [ ] `docs` (Docusaurus Knowledge Base)

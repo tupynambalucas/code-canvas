@@ -1,12 +1,12 @@
 ---
 title: Infrastructure
-description: Multi-service topologies, containerization standards, environment configurations, and Docker topologies in Elo Orgânico.
+description: Multi-service topologies, containerization standards, environment configurations, and Docker topologies in CodeCanvas.
 sidebar_position: 2
 ---
 
 # Infrastructure Standards
 
-To keep the **Elo Orgânico** infrastructure, DevOps tooling, and background runtime environments robust, maintainable, and highly modular, this document unifies our self-hosted infrastructure standards, directory conventions, and multi-service Docker topologies.
+To keep the **CodeCanvas** infrastructure, DevOps tooling, and background runtime environments robust, maintainable, and highly modular, this document unifies our self-hosted infrastructure standards, directory conventions, and multi-service Docker topologies.
 
 ---
 
@@ -14,7 +14,7 @@ To keep the **Elo Orgânico** infrastructure, DevOps tooling, and background run
 
 Designed for **Self-Hosted Excellence** on Hetzner Cloud.
 
-Each bounded context (e.g., `instance/`, `portal/`) maintains a modular Compose configuration using environment overrides/inheritance:
+Each bounded context (e.g., `extension/`, `studio/`) maintains a modular Compose configuration using environment overrides/inheritance:
 
 | File                    | Environment          | Services                                    | Database               |
 | :---------------------- | :------------------- | :------------------------------------------ | :--------------------- |
@@ -30,9 +30,9 @@ The `compose.prod.yaml` has no MongoDB service by design. In production and stag
 
 To prevent naming collisions on hosts that run multiple stacks or environments concurrently (such as staging and production on the same server), the following conventions are enforced:
 
-- **Project Names**: Dev compose files define `name: elo-[context]-dev` (e.g., `elo-instance-dev`), while production/staging compose files define `name: elo-[context]-prod` (e.g., `elo-instance-prod`).
-- **Dev Environments**: Container names carry an explicit `-dev` suffix (e.g., `elo-instance-redis-dev`, `elo-instance-db-dev`).
-- **Staging vs. Production**: Production/staging containers dynamically append the environment name suffix using the `APP_ENV` variable (e.g., `container_name: elo-instance-redis-${APP_ENV:-prod}`). This isolates the containers at the Docker host daemon level, allowing staging and production containers to coexist on the same virtual machine without collisions.
+- **Project Names**: Dev compose files define `name: codecanvas-[context]-dev` (e.g., `codecanvas-extension-dev`), while production/staging compose files define `name: codecanvas-[context]-prod` (e.g., `codecanvas-extension-prod`).
+- **Dev Environments**: Container names carry an explicit `-dev` suffix (e.g., `codecanvas-extension-redis-dev`, `codecanvas-extension-db-dev`).
+- **Staging vs. Production**: Production/staging containers dynamically append the environment name suffix using the `APP_ENV` variable (e.g., `container_name: codecanvas-extension-redis-${APP_ENV:-prod}`). This isolates the containers at the Docker host daemon level, allowing staging and production containers to coexist on the same virtual machine without collisions.
 
 ### 1.2. Why Production and Staging Share a Single Compose File
 
@@ -51,13 +51,13 @@ Creating a separate `compose.staging.yaml` as a structural copy of `compose.prod
 Each application owns its `Dockerfile` co-located within its directory, following the **Single Responsibility** and **Bounded Context** principles:
 
 ```plaintext
-instance/services/api/Dockerfile    # Multi-stage: turbo prune → build → pnpm deploy → runner
-instance/services/web/Dockerfile    # Multi-stage: turbo prune → vite build → nginx:alpine
-portal/apps/api/Dockerfile      # Same pattern as instance/api
-portal/apps/web/Dockerfile      # Same pattern as instance/web
+extension/services/api/Dockerfile    # Multi-stage: turbo prune → build → pnpm deploy → runner
+extension/services/web/Dockerfile    # Multi-stage: turbo prune → vite build → nginx:alpine
+studio/apps/api/Dockerfile      # Same pattern as extension/api
+studio/apps/web/Dockerfile      # Same pattern as extension/web
 ```
 
-Shared database and cache services (MongoDB, Redis) have their Dockerfiles and local environment files encapsulated inside `instance/services/mongodb/` and `instance/services/redis/` respectively, keeping them completely self-contained.
+Shared database and cache services (MongoDB, Redis) have their Dockerfiles and local environment files encapsulated inside `extension/services/mongodb/` and `extension/services/redis/` respectively, keeping them completely self-contained.
 
 The API Dockerfiles use **Turborepo pruning** (`turbo prune`) and **`pnpm deploy`** to produce minimal images — no source code, no devDependencies, no monorepo symlinks in production.
 
@@ -76,7 +76,7 @@ Environment variables follow the **Bounded Context** and **Single Responsibility
 | `[context]/infrastructure/docker/.env.staging`   | Staging Stack    | Centralized staging configs, MongoDB Atlas staging URIs, Turnstile staging credentials | ignored     |
 | `[context]/infrastructure/docker/.env.*.example` | Repository       | Onboarding configuration templates for dev, prod, and staging deployment scopes        | **tracked** |
 
-_Note: In the table above, `[context]` represents either the `instance` or `portal` directory._
+_Note: In the table above, `[context]` represents either the `extension` or `studio` directory._
 
 `VITE_*` variables (e.g., `VITE_TURNSTILE_SITE_KEY`) are **build-time** only — Vite bakes them statically into the JavaScript bundle during `vite build`. In Docker builds, they are passed via `ARG` → `ENV` before the build step runs. In local development, Vite loads variables directly from the centralized `[context]/infrastructure/docker/.env.dev` directory via its `envDir` configuration.
 
@@ -84,7 +84,7 @@ _Note: In the table above, `[context]` represents either the `instance` or `port
 
 ## 4. Network & Latency
 
-All components in a deployment stack reside in a private named Docker bridge network (e.g., `elo_instance_network`) for sub-millisecond latency between the API and Redis. The Nginx container is the only service with an external port binding; the API is only reachable via the Nginx reverse proxy on the internal network.
+All components in a deployment stack reside in a private named Docker bridge network (e.g., `codecanvas_extension_network`) for sub-millisecond latency between the API and Redis. The Nginx container is the only service with an external port binding; the API is only reachable via the Nginx reverse proxy on the internal network.
 
 ---
 
@@ -93,7 +93,7 @@ All components in a deployment stack reside in a private named Docker bridge net
 The Web containers (Nginx) handle two concerns:
 
 1. **SPA Routing**: All unknown paths fall back to `index.html` via `try_files $uri $uri/ /index.html`, allowing React Router to handle client-side navigation without 404s on page refresh.
-2. **API Reverse Proxy**: Requests to `/api/*` are proxied to the API container using its Docker service name as the hostname (`http://instance-api:3000/`). The trailing slash strips the `/api` prefix before forwarding to Fastify.
+2. **API Reverse Proxy**: Requests to `/api/*` are proxied to the API container using its Docker service name as the hostname (`http://extension-api:3000/`). The trailing slash strips the `/api` prefix before forwarding to Fastify.
 
 ---
 
@@ -103,7 +103,7 @@ To maintain strict parity across environments (development, staging, and product
 
 ### 6.1. Database Naming Standardization
 
-The system enforces `elodb` as the canonical database name across all environments. The database connection plugin parses the configured `MONGO_URI` connection string and overrides the database path to `/elodb`. This prevents accidental connection to default databases (such as `test` on MongoDB Atlas) and guarantees that development, staging, and production instances use the correct data store name.
+The system enforces `codecanvasdb` as the canonical database name across all environments. The database connection plugin parses the configured `MONGO_URI` connection string and overrides the database path to `/codecanvasdb`. This prevents accidental connection to default databases (such as `test` on MongoDB Atlas) and guarantees that development, staging, and production extensions use the correct data store name.
 
 ### 6.2. Natively Integrated Seeding (`SeedPlugin`)
 
@@ -166,7 +166,7 @@ To orchestrate these modular workspaces without introducing global pollution or 
 ### 8.1. Gold-Standard `compose.yaml` Blueprint
 
 ```yaml
-name: elo-tool-workspace # Named Docker Compose namespace to prevent container name clashes
+name: codecanvas-tool-workspace # Named Docker Compose namespace to prevent container name clashes
 
 services:
   # 1. Primary Service Daemon
@@ -174,7 +174,7 @@ services:
     build:
       context: ../../services/primary-service # Pluggable service build context (isolation)
       dockerfile: Dockerfile
-    container_name: elo-primary-service-daemon # Strict standard container naming
+    container_name: codecanvas-primary-service-daemon # Strict standard container naming
     volumes:
       - ../../../../:/workspace # Volume mount to bind the host monorepo root
     env_file:
@@ -192,7 +192,7 @@ services:
     build:
       context: ../../services/secondary-service
       dockerfile: Dockerfile
-    container_name: elo-secondary-service-daemon
+    container_name: codecanvas-secondary-service-daemon
     volumes:
       - ../../../../:/workspace
     env_file:
@@ -287,11 +287,11 @@ This pattern is required for orchestrators, API gateways, or integration proxies
 #### 9.3. Gold-Standard `compose.yaml` (Pattern A)
 
 ```yaml
-name: elo-mcp-workspace # Named Docker Compose namespace
+name: codecanvas-mcp-workspace # Named Docker Compose namespace
 
 networks:
   mcp-net:
-    name: elo-mcp-network
+    name: codecanvas-mcp-network
     driver: bridge
 
 services:
@@ -300,7 +300,7 @@ services:
     build:
       context: ../../services/gateway
       dockerfile: Dockerfile
-    container_name: elo-mcp-gateway
+    container_name: codecanvas-mcp-gateway
     restart: always
     environment:
       - PORT=3005
@@ -320,7 +320,7 @@ services:
     build:
       context: ../../services/service-adapter-a
       dockerfile: Dockerfile
-    container_name: elo-mcp-adapter-github
+    container_name: codecanvas-mcp-adapter-github
     restart: always
     env_file:
       - ../../services/service-adapter-a/.env.service
@@ -334,7 +334,7 @@ services:
     build:
       context: ../../services/service-adapter-b
       dockerfile: Dockerfile
-    container_name: elo-mcp-adapter-browser
+    container_name: codecanvas-mcp-adapter-browser
     restart: always
     env_file:
       - ../../services/service-adapter-b/.env.service
@@ -394,11 +394,11 @@ This pattern is required for complex platforms (inspired by `studio/penpot/` or 
 #### 9.6. Gold-Standard `compose.yaml` (Pattern B)
 
 ```yaml
-name: elo-distributed-workspace
+name: codecanvas-distributed-workspace
 
 networks:
   stack-net:
-    name: elo-stack-network
+    name: codecanvas-stack-network
     driver: bridge
 
 services:
@@ -407,7 +407,7 @@ services:
     build:
       context: ../../services/frontend
       dockerfile: Dockerfile
-    container_name: elo-stack-frontend
+    container_name: codecanvas-stack-frontend
     restart: always
     ports:
       - "9005:8080" # Binds external host port to container edge
@@ -423,7 +423,7 @@ services:
     build:
       context: ../../services/backend
       dockerfile: Dockerfile
-    container_name: elo-stack-backend
+    container_name: codecanvas-stack-backend
     restart: always
     env_file:
       - ../../config/.env.backend
@@ -438,7 +438,7 @@ services:
     build:
       context: ../../services/cache
       dockerfile: Dockerfile
-    container_name: elo-stack-cache
+    container_name: codecanvas-stack-cache
     restart: always
     volumes:
       - stack_valkey_data:/data

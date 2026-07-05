@@ -1,12 +1,12 @@
 ---
 title: GitHub Standards
-description: Professional branching, commit, release strategy, and repository automation standards for the Elo Orgânico monorepo.
+description: Professional branching, commit, release strategy, and repository automation standards for the CodeCanvas monorepo.
 sidebar_position: 2
 ---
 
 # GitHub Standards
 
-This document outlines the professional branching and release strategy for **Elo Orgânico**, combining the structural discipline of **Git Flow** with the collaboration power of the **GitHub CLI (`gh`)**.
+This document outlines the professional branching and release strategy for **CodeCanvas**, combining the structural discipline of **Git Flow** with the collaboration power of the **GitHub CLI (`gh`)**.
 
 ---
 
@@ -71,20 +71,20 @@ To maintain a clean and automated history, all commits must follow the **[Conven
 
 Use the context or package name as the scope:
 
-- **`instance`**: Changes to the Community Instance apps or core.
-- **`portal`**: Changes to the Global Portal apps or core.
+- **`extension`**: Changes to the Extension apps or core.
+- **`studio`**: Changes to the Global studio apps or core.
 - **`core`**: Changes to shared domain logic.
 - **`studio`**: Design tokens, assets, or Penpot configuration.
 - **`tools`**: MCP servers, scripts, or infrastructure.
 - **`deps`**: Dependency updates (managed via catalogs).
 
-**Example:** `feat(instance): add Pix payment reconciliation to checkout`
+**Example:** `feat(extension): add Pix payment reconciliation to checkout`
 
 ---
 
 ## Commit Validation & CI Hooks
 
-To maintain code quality, styling consistency, and type safety across the **Elo Orgânico** monorepo, we use an automated pipeline that checks all changes before they are committed locally and before they are merged in the cloud.
+To maintain code quality, styling consistency, and type safety across the **CodeCanvas** monorepo, we use an automated pipeline that checks all changes before they are committed locally and before they are merged in the cloud.
 
 ### Local Validation Architecture (Pre-commit)
 
@@ -110,20 +110,20 @@ graph TD
 
 ### Selective Workspace Typechecking
 
-Running a full typecheck across all monorepo packages (`pnpm typecheck`) can take several seconds. To keep the commit process fast, we use a custom script located at [precommit-typecheck.ts](file:///D:/projects/elo-organico/tools/scripts/precommit-typecheck.ts).
+Running a full typecheck across all monorepo packages (`pnpm typecheck`) can take several seconds. To keep the commit process fast, we use a custom script located at [precommit-typecheck.ts](file:///D:/projects/code-canvas/tools/scripts/precommit-typecheck.ts).
 
 #### How it Works
 
 1. The script inspects the currently staged files using `git diff --cached --name-only`.
 2. It detects the file extensions: if no JavaScript or TypeScript files have changed, it skips typechecking completely.
 3. It maps the changed files to their corresponding monorepo workspaces:
-   - Files in `instance/` $\rightarrow$ typecheck `@elo-instance/*` packages.
-   - Files in `studio/` $\rightarrow$ typecheck `@elo-studio/assets`.
-   - Files in `tools/` $\rightarrow$ typecheck `@elo-organico/tools`.
-   - Files in `docs/` $\rightarrow$ typecheck `@elo-organico/docs`.
-   - Files in `portal/` $\rightarrow$ typecheck `@elo-portal/*`.
-4. If global configuration or root files (e.g. `package.json`, `eslint.config.ts`, `pnpm-workspace.yaml`) are modified, the script runs a full typecheck (excluding `portal` until it is updated).
-5. It executes the targeted typecheck in parallel using Turborepo filters (e.g., `npx turbo run typecheck --filter=@elo-instance/*`).
+   - Files in `extension/` $\rightarrow$ typecheck `@codecanvas/*` packages.
+   - Files in `studio/` $\rightarrow$ typecheck `@codecanvas-studio/assets`.
+   - Files in `tools/` $\rightarrow$ typecheck `@code-canvas/tools`.
+   - Files in `docs/` $\rightarrow$ typecheck `@code-canvas/docs`.
+   - Files in `studio/` $\rightarrow$ typecheck `@codecanvas/*`.
+4. If global configuration or root files (e.g. `package.json`, `eslint.config.ts`, `pnpm-workspace.yaml`) are modified, the script runs a full typecheck (excluding `studio` until it is updated).
+5. It executes the targeted typecheck in parallel using Turborepo filters (e.g., `npx turbo run typecheck --filter=@codecanvas/*`).
 
 :::tip[Performance Advantage]
 If you only modify files in the `tools` workspace, only the tools project is typechecked, which takes less than 1.5 seconds. If you only modify documentation (`.md` or `.mdx` files), the typecheck is skipped entirely.
@@ -137,7 +137,7 @@ Once typechecking passes, Husky triggers `lint-staged`, which runs linters and f
 
 #### Configuration
 
-The rules are declared in the root [package.json](file:///D:/projects/elo-organico/package.json):
+The rules are declared in the root [package.json](file:///D:/projects/code-canvas/package.json):
 
 ```json
   "lint-staged": {
@@ -151,7 +151,7 @@ The rules are declared in the root [package.json](file:///D:/projects/elo-organi
 ```
 
 :::note[Prettier Integration]
-For JavaScript, TypeScript, and TSX files, we do not run the standalone Prettier CLI. Instead, Prettier runs as an ESLint rule via `eslint-plugin-prettier`. Running `eslint --fix` formats the code according to [shared/config/prettierrc.json](file:///D:/projects/elo-organico/shared/config/prettierrc.json) and checks for code quality issues in a single execution.
+For JavaScript, TypeScript, and TSX files, we do not run the standalone Prettier CLI. Instead, Prettier runs as an ESLint rule via `eslint-plugin-prettier`. Running `eslint --fix` formats the code according to [shared/config/prettierrc.json](file:///D:/projects/code-canvas/shared/config/prettierrc.json) and checks for code quality issues in a single execution.
 :::
 
 ---
@@ -160,11 +160,11 @@ For JavaScript, TypeScript, and TSX files, we do not run the standalone Prettier
 
 Local Git hooks can be bypassed (e.g. using `git commit --no-verify`). To prevent unvalidated code from reaching stable branches, we run a Continuous Integration (CI) workflow in GitHub on every push and Pull Request.
 
-The workflow configuration is defined in [.github/workflows/ci.yaml](file:///D:/projects/elo-organico/.github/workflows/ci.yaml):
+The workflow configuration is defined in [.github/workflows/ci.yaml](file:///D:/projects/code-canvas/.github/workflows/ci.yaml):
 
 - It installs dependencies using `pnpm install --frozen-lockfile`.
-- It executes the full typecheck suite: `pnpm typecheck --filter=!@elo-portal/*`.
-- It validates code style and quality: `pnpm lint --filter=!@elo-portal/*`.
+- It executes the full typecheck suite: `pnpm typecheck --filter=!@codecanvas/*`.
+- It validates code style and quality: `pnpm lint --filter=!@codecanvas/*`.
 
 :::caution[Branch Protection]
 Repository administrators must configure branch protection rules on GitHub for `main` and `develop` branches. Enable the option **Require status checks to pass before merging** and select **Validate Types & Lint** to prevent merging PRs with failing builds.

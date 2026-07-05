@@ -36,7 +36,7 @@ This file establishes the authoritative monorepo context, global rules, and inte
 
 ## 2. Bounded Context Router Pattern (`/[context]/AGENTS.md`)
 
-Created at the root of a domain directory (e.g. `instance/`, `portal/`, `tools/`, `studio/`) to route agents to its apps and packages.
+Created at the root of a domain directory (e.g. `extension/`, `studio/`, `tools/`, `studio/`) to route agents to its apps and packages.
 
 ### Outline Layout
 

@@ -70,7 +70,7 @@ For ordered instructions, use lazy numbering (`1.`) for all list items. This all
 ### D. File and Directory References
 
 - When mentioning a file path or directory within text, always use inline code syntax and include a relative link using the `file://` scheme or standard markdown relative links.
-- Example: Refer to [instance/packages/core/src/index.ts](../../../../../instance/packages/core/src/index.ts) for details.
+- Example: Refer to [extension/packages/core/src/index.ts](../../../../../extension/packages/core/src/index.ts) for details.
 
 ### E. Unordered Lists Formatting
 

@@ -1,5 +1,5 @@
 /**
- * Elo Organico - Canonical Icon System
+ * CodeCanvas - Canonical Icon System
  * Powered by react-icons, managed by @studio.
  */
 
@@ -55,7 +55,7 @@ export interface IconProps extends React.SVGAttributes<SVGElement> {
 }
 
 /**
- * Canonical Icon component for Elo Organico.
+ * Canonical Icon component for CodeCanvas.
  * Wraps react-icons to maintain a consistent interface across the monorepo.
  */
 export const Icon = React.forwardRef<HTMLSpanElement, IconProps>(

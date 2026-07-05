@@ -14,7 +14,7 @@ This skill defines the authoritative standards, directory structures, design pat
 All documentation inside the `docs/` workspace is organized into logical directories based on content scope. When editing or creating pages, place them in the correct location:
 
 - `docs/handbook/`: High-level handbook guides (Architecture, Style Guide, Master Plan, Orchestration Reference).
-- `docs/roadmap/`: Multi-phase core, instance, portal, and tools roadmaps (e.g., `01-core.mdx`, `02-instance.mdx`).
+- `docs/roadmap/`: Multi-phase core, extension, studio, and tools roadmaps (e.g., `01-core.mdx`, `02-extension.mdx`).
 - `docs/workspaces/`: Deep-dives into workspace-specific architecture and engineering documentation.
 - `docs/releases/`: Official project changelog and release notes.
 - `docs/src/pages/`: Custom interactive landing pages and React-based workspace routes.

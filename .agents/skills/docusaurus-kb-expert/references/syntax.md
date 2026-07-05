@@ -69,7 +69,7 @@ import TabItem from "@theme/TabItem";
 To display a filename or title above a code block, use the `title="..."` key in the code block definition:
 
 ```typescript title="packages/core/src/types/index.ts"
-export type BoundedContext = "instance" | "portal";
+export type BoundedContext = "extension" | "studio";
 ```
 
 ### B. Line Highlighting

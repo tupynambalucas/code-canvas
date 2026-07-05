@@ -10,7 +10,7 @@ O workspace `tools/agents` provisiona as CLIs do GitHub Copilot e do Google Anti
 
 #### Visão Geral da Arquitetura
 
-Os containers de agentes são executados dentro da mesma rede bridge `elo-mcp-net` que o gateway MCP, comunicando-se com ele por meio de roteamento de DNS interno. Nenhuma exposição de porta no nível do host é necessária para a comunicação entre serviços.
+Os containers de agentes são executados dentro da mesma rede bridge `codecanvas-mcp-net` que o gateway MCP, comunicando-se com ele por meio de roteamento de DNS interno. Nenhuma exposição de porta no nível do host é necessária para a comunicação entre serviços.
 
 ```mermaid
 graph TD
@@ -19,24 +19,24 @@ graph TD
     Dev["Desenvolvedor (VS Code / Terminal)"]
   end
 
-  subgraph "Docker: elo-agents"
+  subgraph "Docker: codecanvas-agents"
     Copilot["agent-copilot"]
     Antigravity["agent-antigravity"]
   end
 
-  subgraph "Docker: elo-mcp"
-    Gateway["elo-mcp-gateway (elo.internal.tools.mcp:3005)"]
-    Github["elo-mcp-github"]
-    Context7["elo-mcp-context7"]
-    Browser["elo-mcp-browser"]
-    Dockerhub["elo-mcp-dockerhub"]
+  subgraph "Docker: codecanvas-mcp"
+    Gateway["codecanvas-mcp-gateway (elo.internal.tools.mcp:3005)"]
+    Github["codecanvas-mcp-github"]
+    Context7["codecanvas-mcp-context7"]
+    Browser["codecanvas-mcp-browser"]
+    Dockerhub["codecanvas-mcp-dockerhub"]
   end
 
   Dev -- "docker exec -it" --> Copilot
   Dev -- "docker exec -it" --> Antigravity
-  Copilot -- "elo-agents-net" --> Host["Host Gateway"]
-  Antigravity -- "elo-agents-net" --> Host
-  Host -- "elo-mcp-net" --> Gateway
+  Copilot -- "codecanvas-agents-net" --> Host["Host Gateway"]
+  Antigravity -- "codecanvas-agents-net" --> Host
+  Host -- "codecanvas-mcp-net" --> Gateway
   Gateway --> Github
   Gateway --> Context7
   Gateway --> Browser

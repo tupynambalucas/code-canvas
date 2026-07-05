@@ -1,6 +1,6 @@
 ---
 title: Overview
-description: Comprehensive overview of Elo Orgânico's monorepo structure, bounded contexts, and technology stack.
+description: Comprehensive overview of CodeCanvas's monorepo structure, bounded contexts, and technology stack.
 sidebar_position: 1
 ---
 
@@ -10,15 +10,15 @@ import DocCardList from "@theme/DocCardList";
 
 ## 1. Executive Summary
 
-Elo Orgânico is an integrated management platform for organic product sharing cycles. The system is built on a **Monorepo** architecture using **PNPM Workspaces** and **Turborepo**, prioritizing high performance, strict typing, and domain isolation through a **Bounded Context** strategy.
+CodeCanvas is an integrated management platform for organic product sharing cycles. The system is built on a **Monorepo** architecture using **PNPM Workspaces** and **Turborepo**, prioritizing high performance, strict typing, and domain isolation through a **Bounded Context** strategy.
 
-The architecture is designed for a **"Singleton Platform / Multi-Tenant Instance"** model, ensuring that the global marketplace and community-specific operations are logically and physically decoupled at the root level.
+The architecture is designed for a **"Singleton Platform / Multi-Tenant Extension"** model, ensuring that the global marketplace and community-specific operations are logically and physically decoupled at the root level.
 
 ---
 
 ## 2. Monorepo Structure & Bounded Contexts
 
-The Elo Orgânico codebase is organized into **Domain Contexts** at the root level. For a detailed breakdown of the application roles, context philosophy, and directory structures, please refer to the dedicated Bounded Context documentation.
+The CodeCanvas codebase is organized into **Domain Contexts** at the root level. For a detailed breakdown of the application roles, context philosophy, and directory structures, please refer to the dedicated Bounded Context documentation.
 
 <DocCardList
   items={[
@@ -27,7 +27,7 @@ The Elo Orgânico codebase is organized into **Domain Contexts** at the root lev
       href: "./bounded-context",
       label: "Bounded Context & Application Roles",
       description:
-        "Detailed explanation of Bounded Contexts, Monorepo Structure, and Application Roles in Elo Orgânico.",
+        "Detailed explanation of Bounded Contexts, Monorepo Structure, and Application Roles in CodeCanvas.",
     },
   ]}
 />
@@ -43,7 +43,7 @@ We employ a **Hybrid High-Performance Architecture** optimized by **Turborepo** 
 **Turborepo** is the engine behind our monorepo productivity. It handles:
 
 - **Dependency Graph:** Automatically identifying which packages need to be built or checked based on local changes.
-- **Infrastructure Coupling:** Orchestrating Docker Compose services as pre-requisites for application development (e.g., `pnpm instance:up` starts databases before the API).
+- **Infrastructure Coupling:** Orchestrating Docker Compose services as pre-requisites for application development (e.g., `pnpm extension:up` starts databases before the API).
 - **Caching:** Speeding up builds, type-checking, and linting by skipping unchanged modules.
 - **Unified Outputs:** Standardizing build artifacts into `dist/` (for apps and core) and `build/` (for Docusaurus).
 
@@ -71,7 +71,7 @@ For a complete reference list of orchestration scripts, service commands, and de
 
 ## 5. Architectural Principles
 
-To ensure extreme maintainability, long-term readability, and clean boundaries across our domain contexts, Elo Orgânico follows four foundational architectural principles.
+To ensure extreme maintainability, long-term readability, and clean boundaries across our domain contexts, CodeCanvas follows four foundational architectural principles.
 
 Click on any card below to explore a deep dive into each principle:
 
@@ -153,9 +153,9 @@ Controller -> Service -> Repository -> Model
 To maintain strict typing and decoupling, repositories receive the Mongoose model via dependency injection.
 
 ```typescript
-// instance/apps/api/src/domains/auth/auth.repository.ts
+// extension/apps/api/src/domains/auth/auth.repository.ts
 import type { Model } from "mongoose";
-import type { IUser } from "@elo-instance/core";
+import type { IUser } from "@codecanvas/extension";
 
 export class AuthRepository {
   constructor(private readonly userModel: Model<IUser>) {}
@@ -181,7 +181,7 @@ To prevent monolithic stores and unnecessary re-renders in React 19, the fronten
 #### Implementation Example (Zustand Atomic Selectors)
 
 ```typescript
-// instance/apps/web/src/domains/cart/hooks/useCart.ts
+// extension/apps/web/src/domains/cart/hooks/useCart.ts
 import { useCartStore } from "../cart.store";
 
 // Atomic Selectors
@@ -214,14 +214,14 @@ For a comprehensive, deep-dive guide on directory structures, gold-standard Dock
       href: "./infrastructure",
       label: "Infrastructure",
       description:
-        "To keep the Elo Orgânico infrastructure, DevOps tooling, and background runtime environments robust, maintainable, and highly modular, this document unifies our self-hosted infrastructure standards, directory conventions, and multi-service Docker topologies.",
+        "To keep the CodeCanvas infrastructure, DevOps tooling, and background runtime environments robust, maintainable, and highly modular, this document unifies our self-hosted infrastructure standards, directory conventions, and multi-service Docker topologies.",
     },
     {
       type: "link",
       href: "./deployment",
       label: "Deployment",
       description:
-        "To ensure high availability, security, and reproducible environments, Elo Orgânico utilizes a modern, self-hosted deployment model designed for Hetzner Cloud virtual machines. This guide outlines our deployment strategy, environment synchronization, and operational procedures.",
+        "To ensure high availability, security, and reproducible environments, CodeCanvas utilizes a modern, self-hosted deployment model designed for Hetzner Cloud virtual machines. This guide outlines our deployment strategy, environment synchronization, and operational procedures.",
     },
   ]}
 />
@@ -239,7 +239,7 @@ The Studio and Tools workspaces provide the infrastructure for design-to-code al
 
 ## 10. Security Standards
 
-Elo Orgânico follows a multi-layered security strategy. For detailed implementation details, refer to the **[Security Architecture](./security.mdx)** document.
+CodeCanvas follows a multi-layered security strategy. For detailed implementation details, refer to the **[Security Architecture](./security.mdx)** document.
 
 - **Bot Protection**: Integration with Cloudflare Turnstile for all authentication entry points.
 - **Brute-Force Mitigation**: IP-based rate limiting and account lockout logic.

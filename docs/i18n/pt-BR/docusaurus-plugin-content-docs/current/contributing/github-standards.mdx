@@ -1,12 +1,12 @@
 ---
 title: Padrões do GitHub
-description: Estratégia profissional de ramificação (branching), commits e releases para o monorepo Elo Orgânico.
+description: Estratégia profissional de ramificação (branching), commits e releases para o monorepo CodeCanvas.
 sidebar_position: 2
 ---
 
 # Padrões do GitHub
 
-Este documento descreve a estratégia profissional de ramificação e lançamento para o **Elo Orgânico**, combinando a disciplina estrutural do **Git Flow** com o poder de colaboração da **GitHub CLI (`gh`)**.
+Este documento descreve a estratégia profissional de ramificação e lançamento para o **CodeCanvas**, combinando a disciplina estrutural do **Git Flow** com o poder de colaboração da **GitHub CLI (`gh`)**.
 
 ---
 
@@ -71,20 +71,20 @@ Para manter um histórico limpo e automatizado, todos os commits devem seguir a 
 
 Use o contexto ou nome do pacote como escopo:
 
-- **`instance`**: Mudanças nos apps ou core da Instância da Comunidade.
-- **`portal`**: Mudanças nos apps ou core do Portal Global.
+- **`extension`**: Mudanças nos apps ou core da VS Code Extension.
+- **`studio`**: Mudanças nos apps ou core do studio Global.
 - **`core`**: Mudanças na lógica de domínio compartilhada.
 - **`studio`**: Tokens de design, ativos ou configuração do Penpot.
 - **`tools`**: Servidores MCP, scripts ou infraestrutura.
 - **`deps`**: Atualizações de dependências (gerenciadas via catalogs).
 
-**Exemplo:** `feat(instance): add Pix payment reconciliation to checkout`
+**Exemplo:** `feat(extension): add Pix payment reconciliation to checkout`
 
 ---
 
 ## Validação de Commits & Hooks de CI
 
-Para manter a qualidade do código, a consistência de estilo e a segurança de tipos em todo o monorepo **Elo Orgânico**, utilizamos um fluxo automatizado que valida todas as alterações antes que elas sejam salvas localmente e antes de sofrerem merge na nuvem.
+Para manter a qualidade do código, a consistência de estilo e a segurança de tipos em todo o monorepo **CodeCanvas**, utilizamos um fluxo automatizado que valida todas as alterações antes que elas sejam salvas localmente e antes de sofrerem merge na nuvem.
 
 ### Arquitetura de Validação Local (Pre-commit)
 
@@ -110,20 +110,20 @@ graph TD
 
 ### Validação Seletiva de Tipos por Workspace
 
-Rodar a checagem completa de tipos em todas as aplicações (`pnpm typecheck`) a cada commit pode ser lento. Para otimizar esse fluxo, desenvolvemos um script inteligente em [precommit-typecheck.ts](file:///D:/projects/elo-organico/tools/scripts/precommit-typecheck.ts).
+Rodar a checagem completa de tipos em todas as aplicações (`pnpm typecheck`) a cada commit pode ser lento. Para otimizar esse fluxo, desenvolvemos um script inteligente em [precommit-typecheck.ts](file:///D:/projects/code-canvas/tools/scripts/precommit-typecheck.ts).
 
 #### Como Funciona
 
 1. O script inspeciona os arquivos preparados na staging area usando o comando `git diff --cached --name-only`.
 2. Identifica as extensões: se nenhum arquivo de código (JavaScript ou TypeScript) foi alterado, ele pula a checagem de tipos inteiramente.
 3. Mapeia os arquivos modificados para seus respectivos pacotes do monorepo:
-   - Alterações em `instance/` $\rightarrow$ typecheck de `@elo-instance/*`.
-   - Alterações em `studio/` $\rightarrow$ typecheck de `@elo-studio/assets`.
-   - Alterações em `tools/` $\rightarrow$ typecheck de `@elo-organico/tools`.
-   - Alterações em `docs/` $\rightarrow$ typecheck de `@elo-organico/docs`.
-   - Alterações em `portal/` $\rightarrow$ typecheck de `@elo-portal/*`.
-4. Se arquivos de configuração global ou de raiz (como `package.json`, `eslint.config.ts`, `pnpm-workspace.yaml`) forem alterados, o script executa um typecheck completo (excluindo `portal` temporariamente).
-5. Executa as validações filtradas em paralelo utilizando o Turborepo (ex: `npx turbo run typecheck --filter=@elo-instance/*`).
+   - Alterações em `extension/` $\rightarrow$ typecheck de `@codecanvas/*`.
+   - Alterações em `studio/` $\rightarrow$ typecheck de `@codecanvas-studio/assets`.
+   - Alterações em `tools/` $\rightarrow$ typecheck de `@code-canvas/tools`.
+   - Alterações em `docs/` $\rightarrow$ typecheck de `@code-canvas/docs`.
+   - Alterações em `studio/` $\rightarrow$ typecheck de `@codecanvas/*`.
+4. Se arquivos de configuração global ou de raiz (como `package.json`, `eslint.config.ts`, `pnpm-workspace.yaml`) forem alterados, o script executa um typecheck completo (excluindo `studio` temporariamente).
+5. Executa as validações filtradas em paralelo utilizando o Turborepo (ex: `npx turbo run typecheck --filter=@codecanvas/*`).
 
 :::tip[Vantagem de Performance]
 Se você alterar apenas arquivos do workspace `tools`, somente o projeto `tools` será checado (levando menos de 1,5 segundos). Se alterar apenas documentação (arquivos `.md` ou `.mdx`), a tipagem é ignorada por completo.
@@ -137,7 +137,7 @@ Após o typecheck passar com sucesso, o Husky chama o `lint-staged` para analisa
 
 #### Configuração
 
-As regras de filtros estão declaradas no arquivo [package.json](file:///D:/projects/elo-organico/package.json) raiz:
+As regras de filtros estão declaradas no arquivo [package.json](file:///D:/projects/code-canvas/package.json) raiz:
 
 ```json
   "lint-staged": {
@@ -151,7 +151,7 @@ As regras de filtros estão declaradas no arquivo [package.json](file:///D:/proj
 ```
 
 :::note[Integração do Prettier]
-Para arquivos de código JavaScript e TypeScript, não rodamos o Prettier como ferramenta separada. Ele é executado de forma embutida como uma regra do ESLint (`eslint-plugin-prettier`). Assim, o comando `eslint --fix` formata o arquivo conforme o [shared/config/prettierrc.json](file:///D:/projects/elo-organico/shared/config/prettierrc.json) e valida as regras de código de uma só vez.
+Para arquivos de código JavaScript e TypeScript, não rodamos o Prettier como ferramenta separada. Ele é executado de forma embutida como uma regra do ESLint (`eslint-plugin-prettier`). Assim, o comando `eslint --fix` formata o arquivo conforme o [shared/config/prettierrc.json](file:///D:/projects/code-canvas/shared/config/prettierrc.json) e valida as regras de código de uma só vez.
 :::
 
 ---
@@ -160,11 +160,11 @@ Para arquivos de código JavaScript e TypeScript, não rodamos o Prettier como f
 
 Como os ganchos locais de commit podem ser burlados (usando a flag `--no-verify`), mantemos um workflow de Integração Contínua (CI) na nuvem que valida todas as branches em Pull Requests e pushes diretos.
 
-O workflow de validação está configurado em [.github/workflows/ci.yaml](file:///D:/projects/elo-organico/.github/workflows/ci.yaml):
+O workflow de validação está configurado em [.github/workflows/ci.yaml](file:///D:/projects/code-canvas/.github/workflows/ci.yaml):
 
 - Instala as dependências utilizando o `pnpm install --frozen-lockfile`.
-- Valida a tipagem completa do monorepo: `pnpm typecheck --filter=!@elo-portal/*`.
-- Valida o linter e o estilo de formatação: `pnpm lint --filter=!@elo-portal/*`.
+- Valida a tipagem completa do monorepo: `pnpm typecheck --filter=!@codecanvas/*`.
+- Valida o linter e o estilo de formatação: `pnpm lint --filter=!@codecanvas/*`.
 
 :::caution[Proteção de Branches]
 Administradores do repositório devem ativar regras de Branch Protection no GitHub para as branches `main` e `develop`. Marque a opção **Require status checks to pass before merging** e adicione a verificação **Validate Types & Lint** para bloquear merges de PRs que falharem na build.

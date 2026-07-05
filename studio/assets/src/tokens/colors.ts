@@ -1,5 +1,5 @@
 /**
- * Elo Organico - Canonical Design Tokens
+ * CodeCanvas - Canonical Design Tokens
  * Source: @docs/handbook/studio.mdx
  */
 

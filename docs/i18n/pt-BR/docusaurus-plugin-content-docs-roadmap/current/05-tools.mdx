@@ -9,7 +9,7 @@ Esta seção detalha a infraestrutura de gateway proxy, servidores de contexto M
 
 ### Gateway Proxy & Rede
 
-- **Gateway Proxy HTTP em Fastify**: Implantação de um gateway conteinerizado (`elo-mcp-gateway`) rodando em Fastify v5 que intercepta e roteia requisições de clientes locais (como a CLI do Antigravity na porta `3005`) para os containers de contexto correspondentes.
+- **Gateway Proxy HTTP em Fastify**: Implantação de um gateway conteinerizado (`codecanvas-mcp-gateway`) rodando em Fastify v5 que intercepta e roteia requisições de clientes locais (como a CLI do Antigravity na porta `3005`) para os containers de contexto correspondentes.
 - **Tratamento de CORS & SSE Streams**: Configuração de headers CORS em nível de rede e desabilitação de timeouts de proxy para assegurar conexões persistentes e estáveis de Server-Sent Events (SSE).
 
 ### Ecossistema MCP Conteinerizado
@@ -31,7 +31,7 @@ Esta seção detalha a infraestrutura de gateway proxy, servidores de contexto M
 - **Armazenamento Persistente de Sessão e Cérebro**: Tokens OAuth, históricos de conversação e dados de tempo de execução são persistidos na máquina hospedeira através de volumes bind-mounted ignorados pelo Git, sobrevivendo a reconstruções de container.
 - **Configurações de TUI sob Controle de Versão**: Os arquivos `settings.json`, `statusline.sh` e `title.sh` da CLI do Antigravity são rastreados no repositório e montados sobre o diretório de execução do container, dando à equipe controle direto sobre o comportamento da CLI sem configurações manuais por máquina.
 - **Roteamento de Rede Interna**: Os containers dos agentes resolvem todos os serviços MCP através do alias customizado do host `elo.internal.tools.mcp:3005`, permitindo que as pilhas de serviços iniciem e parem de forma totalmente independente sem erros de configuração de rede.
-- **Docker-out-of-Docker (DooD)**: Ambos os containers montam o socket do Docker do host, habilitando agentes conteinerizados a orquestrar outras pilhas do monorepo (ex: `pnpm mcp:up`, `pnpm instance:up`) de dentro do container.
+- **Docker-out-of-Docker (DooD)**: Ambos os containers montam o socket do Docker do host, habilitando agentes conteinerizados a orquestrar outras pilhas do monorepo (ex: `pnpm mcp:up`, `pnpm extension:up`) de dentro do container.
 - **Integração de Tarefas do VS Code**: Tarefas registradas no `.vscode/tasks.json` usam prefixos `[Docker]` e `[Host]` para distinguir claramente a execução de CLI baseada em container da execução global na máquina host durante o período de transição de migração.
 
 ## Foco Planejado

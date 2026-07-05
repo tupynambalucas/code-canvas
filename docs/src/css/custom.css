@@ -1,12 +1,12 @@
 @import "tailwindcss/theme" layer(theme);
-@import "@elo-studio/assets/tokens.css" layer(theme);
+@import "@codecanvas-studio/assets/tokens.css" layer(theme);
 @import "tailwindcss/utilities" layer(utilities);
 
 @source "../../docs/**/*.{md,mdx}";
 @source "../**/*.{js,jsx,ts,tsx,md,mdx}";
 
 /**
- * Elo Orgânico - Knowledge Base Custom Styles
+ * CodeCanvas - Knowledge Base Custom Styles
  * 
  * This file applies our centralized brand tokens to the Docusaurus (Infima) 
  * framework, strictly enforcing a light-only theme as per architectural decision.

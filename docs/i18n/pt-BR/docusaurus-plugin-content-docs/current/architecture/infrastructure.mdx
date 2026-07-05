@@ -1,12 +1,12 @@
 ---
 title: Padrões de Infraestrutura
-description: Topologias multi-serviços, padrões de conteinerização, configurações de ambiente e topologias Docker no Elo Orgânico.
+description: Topologias multi-serviços, padrões de conteinerização, configurações de ambiente e topologias Docker no CodeCanvas.
 sidebar_label: Infraestrutura
 ---
 
 # Padrões de Infraestrutura
 
-Para manter a infraestrutura do **Elo Orgânico**, as ferramentas de DevOps e os ambientes de execução em segundo plano robustos, mantíveis e altamente modulares, este documento unifica nossos padrões de infraestrutura self-hosted, convenções de diretórios e topologias Docker multi-serviços.
+Para manter a infraestrutura do **CodeCanvas**, as ferramentas de DevOps e os ambientes de execução em segundo plano robustos, mantíveis e altamente modulares, este documento unifica nossos padrões de infraestrutura self-hosted, convenções de diretórios e topologias Docker multi-serviços.
 
 ---
 
@@ -14,7 +14,7 @@ Para manter a infraestrutura do **Elo Orgânico**, as ferramentas de DevOps e os
 
 Projetado para **Excelência Self-Hosted** na Hetzner Cloud.
 
-Cada contexto delimitado (ex: `instance/`, `portal/`) mantém uma configuração Compose modular utilizando herança/sobrescrita (overrides) de ambiente:
+Cada contexto delimitado (ex: `extension/`, `studio/`) mantém uma configuração Compose modular utilizando herança/sobrescrita (overrides) de ambiente:
 
 | Arquivo                 | Ambiente                       | Serviços                                   | Banco de Dados         |
 | :---------------------- | :----------------------------- | :----------------------------------------- | :--------------------- |
@@ -30,9 +30,9 @@ O `compose.prod.yaml` não possui serviço MongoDB por design. Em produção e h
 
 Para evitar colisões de nomes em hosts que executam múltiplas stacks ou ambientes simultaneamente (como homologação/staging e produção no mesmo servidor), as seguintes convenções são aplicadas:
 
-- **Nomes de Projetos**: Os arquivos de compose de desenvolvimento definem `name: elo-[context]-dev` (ex: `elo-instance-dev`), enquanto os arquivos de compose de produção/staging definem `name: elo-[context]-prod` (ex: `elo-instance-prod`).
-- **Ambientes de Desenvolvimento**: Os nomes dos containers possuem um sufixo explícito `-dev` (ex: `elo-instance-redis-dev`, `elo-instance-db-dev`).
-- **Homologação vs. Produção**: Os containers de produção/staging anexam dinamicamente o sufixo do nome do ambiente usando a variável `APP_ENV` (ex: `container_name: elo-instance-redis-${APP_ENV:-prod}`). Isso isola os containers no nível do daemon do host Docker, permitindo que os containers de staging e produção coexistam na mesma máquina virtual sem colisões.
+- **Nomes de Projetos**: Os arquivos de compose de desenvolvimento definem `name: codecanvas-[context]-dev` (ex: `codecanvas-extension-dev`), enquanto os arquivos de compose de produção/staging definem `name: codecanvas-[context]-prod` (ex: `codecanvas-extension-prod`).
+- **Ambientes de Desenvolvimento**: Os nomes dos containers possuem um sufixo explícito `-dev` (ex: `codecanvas-extension-redis-dev`, `codecanvas-extension-db-dev`).
+- **Homologação vs. Produção**: Os containers de produção/staging anexam dinamicamente o sufixo do nome do ambiente usando a variável `APP_ENV` (ex: `container_name: codecanvas-extension-redis-${APP_ENV:-prod}`). Isso isola os containers no nível do daemon do host Docker, permitindo que os containers de staging e produção coexistam na mesma máquina virtual sem colisões.
 
 ### 1.2. Por que Produção e Homologação/Staging Compartilham um Único Arquivo Compose
 
@@ -51,13 +51,13 @@ Criar um `compose.staging.yaml` separado como uma cópia estrutural de `compose.
 Cada aplicação possui seu próprio `Dockerfile` localizado dentro do seu respectivo diretório, seguindo os princípios de **Responsabilidade Única** e de **Contexto Delimitado**:
 
 ```plaintext
-instance/services/api/Dockerfile    # Multi-stage: turbo prune → build → pnpm deploy → runner
-instance/services/web/Dockerfile    # Multi-stage: turbo prune → vite build → nginx:alpine
-portal/apps/api/Dockerfile      # Mesmo padrão que instance/api
-portal/apps/web/Dockerfile      # Mesmo padrão que instance/web
+extension/services/api/Dockerfile    # Multi-stage: turbo prune → build → pnpm deploy → runner
+extension/services/web/Dockerfile    # Multi-stage: turbo prune → vite build → nginx:alpine
+studio/apps/api/Dockerfile      # Mesmo padrão que extension/api
+studio/apps/web/Dockerfile      # Mesmo padrão que extension/web
 ```
 
-Serviços de banco de dados e cache (MongoDB, Redis) possuem seus Dockerfiles e arquivos de ambiente locais encapsulados dentro de `instance/services/mongodb/` e `instance/services/redis/` respectivamente, mantendo-os completamente autocontidos.
+Serviços de banco de dados e cache (MongoDB, Redis) possuem seus Dockerfiles e arquivos de ambiente locais encapsulados dentro de `extension/services/mongodb/` e `extension/services/redis/` respectivamente, mantendo-os completamente autocontidos.
 
 Os Dockerfiles de API utilizam a **poda do Turborepo** (`turbo prune`) e o **`pnpm deploy`** para produzir imagens mínimas — sem código-fonte, sem devDependencies e sem symlinks do monorepo em produção.
 
@@ -76,7 +76,7 @@ As variáveis de ambiente seguem os princípios de **Contexto Delimitado** e **R
 | `[context]/infrastructure/docker/.env.staging`   | Stack de Homologação | Configurações de staging centralizadas, URIs do MongoDB Atlas de staging, credenciais de staging do Turnstile | ignorado      |
 | `[context]/infrastructure/docker/.env.*.example` | Repositório          | Modelos de configuração de onboarding para os escopos de implantação de dev, prod e staging                   | **rastreado** |
 
-_Nota: Na tabela acima, `[context]` representa o diretório `instance` ou `portal`._
+_Nota: Na tabela acima, `[context]` representa o diretório `extension` ou `studio`._
 
 As variáveis `VITE_*` (como `VITE_TURNSTILE_SITE_KEY`) são apenas para o **tempo de build (compilação)** — o Vite as grava estaticamente no bundle JavaScript durante o `vite build`. Em builds Docker, elas são transmitidas via `ARG` → `ENV` antes do início da etapa de compilação. No desenvolvimento local, o Vite carrega as variáveis diretamente do diretório centralizado `[context]/infrastructure/docker/.env.dev` por meio de sua configuração `envDir`.
 
@@ -84,7 +84,7 @@ As variáveis `VITE_*` (como `VITE_TURNSTILE_SITE_KEY`) são apenas para o **tem
 
 ## 4. Rede & Latência
 
-Todos os componentes em uma stack de implantação residem em uma rede privada bridge nomeada do Docker (ex: `elo_instance_network`) para latência sub-milissegundo entre a API e o Redis. O container Nginx é o único serviço com um mapeamento de porta externa; a API só é alcançável através do proxy reverso do Nginx na rede interna.
+Todos os componentes em uma stack de implantação residem em uma rede privada bridge nomeada do Docker (ex: `codecanvas_extension_network`) para latência sub-milissegundo entre a API e o Redis. O container Nginx é o único serviço com um mapeamento de porta externa; a API só é alcançável através do proxy reverso do Nginx na rede interna.
 
 ---
 
@@ -93,7 +93,7 @@ Todos os componentes em uma stack de implantação residem em uma rede privada b
 Os containers Web (Nginx) lidam com duas preocupações principais:
 
 1. **Roteamento SPA**: Todos os caminhos desconhecidos retornam para o `index.html` via `try_files $uri $uri/ /index.html`, permitindo que o React Router gerencie a navegação no lado do cliente sem gerar erros 404 ao atualizar a página.
-2. **Proxy Reverso de API**: As requisições para `/api/*` são direcionadas ao container da API usando o nome do seu serviço Docker como hostname (`http://instance-api:3000/`). A barra no final remove o prefixo `/api` antes de encaminhar a requisição para o Fastify.
+2. **Proxy Reverso de API**: As requisições para `/api/*` são direcionadas ao container da API usando o nome do seu serviço Docker como hostname (`http://extension-api:3000/`). A barra no final remove o prefixo `/api` antes de encaminhar a requisição para o Fastify.
 
 ---
 
@@ -103,7 +103,7 @@ Para manter paridade estrita entre os diferentes ambientes (desenvolvimento, sta
 
 ### 6.1. Padronização do Nome do Banco de Dados
 
-O sistema impõe `elodb` como o nome canônico do banco de dados em todos os ambientes. O plugin de conexão de banco de dados analisa a string de conexão `MONGO_URI` configurada e substitui o caminho do banco de dados por `/elodb`. Isso evita conexões acidentais a bancos de dados padrão (como `test` no MongoDB Atlas) e garante que as instâncias de desenvolvimento, staging e produção utilizem o nome correto do data store.
+O sistema impõe `codecanvasdb` como o nome canônico do banco de dados em todos os ambientes. O plugin de conexão de banco de dados analisa a string de conexão `MONGO_URI` configurada e substitui o caminho do banco de dados por `/codecanvasdb`. Isso evita conexões acidentais a bancos de dados padrão (como `test` no MongoDB Atlas) e garante que as extensões de desenvolvimento, staging e produção utilizem o nome correto do data store.
 
 ### 6.2. Semeadura Integrada Nativamente (`SeedPlugin`)
 
@@ -166,7 +166,7 @@ Para orquestrar esses workspaces modulares sem introduzir poluição global ou l
 ### 8.1. Modelo do `compose.yaml` Padrão Ouro
 
 ```yaml
-name: elo-tool-workspace # Named Docker Compose namespace to prevent container name clashes
+name: codecanvas-tool-workspace # Named Docker Compose namespace to prevent container name clashes
 
 services:
   # 1. Primary Service Daemon
@@ -174,7 +174,7 @@ services:
     build:
       context: ../../services/primary-service # Pluggable service build context (isolation)
       dockerfile: Dockerfile
-    container_name: elo-primary-service-daemon # Strict standard container naming
+    container_name: codecanvas-primary-service-daemon # Strict standard container naming
     volumes:
       - ../../../../:/workspace # Volume mount to bind the host monorepo root
     env_file:
@@ -192,7 +192,7 @@ services:
     build:
       context: ../../services/secondary-service
       dockerfile: Dockerfile
-    container_name: elo-secondary-service-daemon
+    container_name: codecanvas-secondary-service-daemon
     volumes:
       - ../../../../:/workspace
     env_file:
@@ -287,11 +287,11 @@ Este padrão é exigido para orquestradores, gateways de API ou proxies de integ
 #### 9.3. `compose.yaml` Padrão Ouro (Padrão A)
 
 ```yaml
-name: elo-mcp-workspace # Namespace nomeado do Docker Compose
+name: codecanvas-mcp-workspace # Namespace nomeado do Docker Compose
 
 networks:
   mcp-net:
-    name: elo-mcp-network
+    name: codecanvas-mcp-network
     driver: bridge
 
 services:
@@ -300,7 +300,7 @@ services:
     build:
       context: ../../services/gateway
       dockerfile: Dockerfile
-    container_name: elo-mcp-gateway
+    container_name: codecanvas-mcp-gateway
     restart: always
     environment:
       - PORT=3005
@@ -320,7 +320,7 @@ services:
     build:
       context: ../../services/service-adapter-a
       dockerfile: Dockerfile
-    container_name: elo-mcp-adapter-github
+    container_name: codecanvas-mcp-adapter-github
     restart: always
     env_file:
       - ../../services/service-adapter-a/.env.service
@@ -334,7 +334,7 @@ services:
     build:
       context: ../../services/service-adapter-b
       dockerfile: Dockerfile
-    container_name: elo-mcp-adapter-browser
+    container_name: codecanvas-mcp-adapter-browser
     restart: always
     env_file:
       - ../../services/service-adapter-b/.env.service
@@ -394,11 +394,11 @@ Este padrão é exigido para plataformas complexas (inspirado no `studio/penpot/
 #### 9.6. `compose.yaml` Padrão Ouro (Padrão B)
 
 ```yaml
-name: elo-distributed-workspace
+name: codecanvas-distributed-workspace
 
 networks:
   stack-net:
-    name: elo-stack-network
+    name: codecanvas-stack-network
     driver: bridge
 
 services:
@@ -407,7 +407,7 @@ services:
     build:
       context: ../../services/frontend
       dockerfile: Dockerfile
-    container_name: elo-stack-frontend
+    container_name: codecanvas-stack-frontend
     restart: always
     ports:
       - "9005:8080" # Vincula a porta externa do host à borda do container
@@ -423,7 +423,7 @@ services:
     build:
       context: ../../services/backend
       dockerfile: Dockerfile
-    container_name: elo-stack-backend
+    container_name: codecanvas-stack-backend
     restart: always
     env_file:
       - ../../config/.env.backend
@@ -438,7 +438,7 @@ services:
     build:
       context: ../../services/cache
       dockerfile: Dockerfile
-    container_name: elo-stack-cache
+    container_name: codecanvas-stack-cache
     restart: always
     volumes:
       - stack_valkey_data:/data

@@ -3,7 +3,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const kbPkgPath = require.resolve("@elo-organico/docs/package.json");
+const kbPkgPath = require.resolve("@code-canvas/docs/package.json");
 const kbDir = path.dirname(kbPkgPath);
 
 const ROADMAP_DIR = path.join(kbDir, "roadmap");
@@ -11,8 +11,8 @@ const ROADMAP_PATH = path.join(kbDir, "../ROADMAP.md");
 
 const ROADMAP_FILES = [
   "01-core.mdx",
-  "02-instance.mdx",
-  "03-portal.mdx",
+  "02-extension.mdx",
+  "03-studio.mdx",
   "04-studio.mdx",
   "05-tools.mdx",
   "06-docs.mdx",
@@ -27,7 +27,7 @@ function generateRoadmap(): void {
   }
 
   let roadmapContent =
-    "# Roadmap\n\nAll planned and completed milestones for each key workspace context in the Elo Orgânico ecosystem, aligning our immediate features with long-term platform transformations.\n\n";
+    "# Roadmap\n\nAll planned and completed milestones for each key workspace context in the CodeCanvas ecosystem, aligning our immediate features with long-term platform transformations.\n\n";
   const entries: string[] = [];
 
   for (const file of ROADMAP_FILES) {

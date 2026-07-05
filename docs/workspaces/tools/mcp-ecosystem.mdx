@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ### Model Context Protocol (MCP) Ecosystem
 
-The Elo Orgânico monorepo features a specialized, containerized MCP ecosystem. It exposes structured development capabilities and codebase contexts to LLM clients (such as the Antigravity CLI or external agents) via a secure, high-performance gateway network.
+The CodeCanvas monorepo features a specialized, containerized MCP ecosystem. It exposes structured development capabilities and codebase contexts to LLM clients (such as the Antigravity CLI or external agents) via a secure, high-performance gateway network.
 
 #### Zero-Dependency TypeScript Adapters
 
@@ -24,7 +24,7 @@ Standard CLI-based MCP servers communicate via standard input/output (stdio) str
 
 The GitHub MCP server connects our containerized development environment directly to the GitHub API. It enables AI agents to coordinate version control tasks, manage issue lifecycles, and perform code search or automated pull request reviews.
 
-- **Upstream:** `http://elo-mcp-github:3001/github/sse`
+- **Upstream:** `http://codecanvas-mcp-github:3001/github/sse`
 
 ##### Tool Registry & Capabilities
 
@@ -79,7 +79,7 @@ The GitHub MCP server connects our containerized development environment directl
 
 The Context7 MCP server interfaces with the Context7 API to provide real-time documentation searches. This is a critical context engine for AI agents to query the latest API syntaxes, usage patterns, and version changes of our core dependencies (React 19, Fastify 5, Three.js) without relying on stale model training data.
 
-- **Upstream:** `http://elo-mcp-context7:3002/context7/sse`
+- **Upstream:** `http://codecanvas-mcp-context7:3002/context7/sse`
 
 ##### Tool Registry & Capabilities
 
@@ -93,9 +93,9 @@ The Context7 MCP server interfaces with the Context7 API to provide real-time do
 
 ##### Overview & Project Utility
 
-The Browser MCP server is a headless Google Chrome instance managed via Playwright. It allows AI agents to interact directly with the project's web interfaces, enabling visual regression checks, console error auditing, accessibility tree inspection, and network request sniping in a fully containerized sandbox.
+The Browser MCP server is a headless Google Chrome extension managed via Playwright. It allows AI agents to interact directly with the project's web interfaces, enabling visual regression checks, console error auditing, accessibility tree inspection, and network request sniping in a fully containerized sandbox.
 
-- **Upstream:** `http://elo-mcp-browser:3003/browser/sse`
+- **Upstream:** `http://codecanvas-mcp-browser:3003/browser/sse`
 - **Host-to-Container Routing:** Automatically rewrites destination URLs targeting `localhost` or `127.0.0.1` to `host.docker.internal` to route requests successfully from the container bridge to the host machine (e.g., accessing Docusaurus on port 3002 or React app on port 5173).
 
 ##### Tool Registry & Capabilities
@@ -121,7 +121,7 @@ The Browser MCP server is a headless Google Chrome instance managed via Playwrig
 - `browser_handle_dialog`: Accept, dismiss, or respond to native browser dialog popups.
 - `browser_evaluate`: Execute custom JavaScript code within the context of the page.
 - `browser_run_code_unsafe`: Execute arbitrary Node.js code within the container sandbox.
-- `browser_close`: Close the browser instance.
+- `browser_close`: Close the browser extension.
 - `browser_resize`: Resize the viewport dimensions.
 
 </details>
@@ -133,7 +133,7 @@ The Browser MCP server is a headless Google Chrome instance managed via Playwrig
 
 The Docker Hub MCP server manages interactions with the Docker Hub registry. It allows the system to discover images, check tags, and inspect container repository metadata, ensuring that our monorepo infrastructure remains aligned with upstream container images.
 
-- **Upstream:** `http://elo-mcp-dockerhub:3004/dockerhub/sse`
+- **Upstream:** `http://codecanvas-mcp-dockerhub:3004/dockerhub/sse`
 
 ##### Tool Registry & Capabilities
 

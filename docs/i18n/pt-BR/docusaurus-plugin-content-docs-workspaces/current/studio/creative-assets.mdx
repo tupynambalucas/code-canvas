@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ### Repositório Central de Criação
 
-O workspace Studio atua como o cofre mestre para todos os ativos criativos da marca Elo Orgânico. Ele centraliza arquivos de origem de suítes de design e produção profissionais, garantindo uma evolução visual controlada por versão e eliminando o gerenciamento fragmentado de ativos.
+O workspace Studio atua como o cofre mestre para todos os ativos criativos da marca CodeCanvas. Ele centraliza arquivos de origem de suítes de design e produção profissionais, garantindo uma evolução visual controlada por versão e eliminando o gerenciamento fragmentado de ativos.
 
 #### Integração com Ferramentas de Design
 
@@ -31,7 +31,7 @@ Os arquivos mestre transitam para as camadas da aplicação através de um pipel
 
 #### Sincronizador de Ativos Cloudflare R2
 
-Para manter nosso repositório Git leve, ativos estáticos prontos para produção não são commitados diretamente no código-fonte. Em vez disso, eles são gerenciados e sincronizados bidirecionalmente com o Cloudflare R2 Object Storage usando nosso pacote de sincronização CLI dedicado `@elo-studio/assets/bucket`.
+Para manter nosso repositório Git leve, ativos estáticos prontos para produção não são commitados diretamente no código-fonte. Em vez disso, eles são gerenciados e sincronizados bidirecionalmente com o Cloudflare R2 Object Storage usando nosso pacote de sincronização CLI dedicado `@codecanvas-studio/assets/bucket`.
 
 ##### Sincronização Dinâmica e Verificação
 
@@ -55,8 +55,8 @@ No menu do CLI, escolha **Push** para enviar alterações locais ou **Pull** par
 
 Pacotes internos acessam ativos criativos através de exportações estritamente definidas para garantir o isolamento arquitetônico:
 
-- `@elo-studio/assets/icons`: Biblioteca SVG otimizada e registro de componentes Icon com curadoria (wrapper forwardRef).
-- `@elo-studio/assets/logos`: Logotipos canônicos da marca.
-- `@elo-studio/assets/tokens`: Constantes de design fortemente tipadas para a lógica JS/TS.
-- `@elo-studio/assets/theme.css`: Tema Tailwind CSS v4 sem runtime e resets globais.
-- `@elo-studio/assets/bucket`: Motor de sincronização de ativos e wrappers de cliente compatíveis com S3.
+- `@codecanvas-studio/assets/icons`: Biblioteca SVG otimizada e registro de componentes Icon com curadoria (wrapper forwardRef).
+- `@codecanvas-studio/assets/logos`: Logotipos canônicos da marca.
+- `@codecanvas-studio/assets/tokens`: Constantes de design fortemente tipadas para a lógica JS/TS.
+- `@codecanvas-studio/assets/theme.css`: Tema Tailwind CSS v4 sem runtime e resets globais.
+- `@codecanvas-studio/assets/bucket`: Motor de sincronização de ativos e wrappers de cliente compatíveis com S3.

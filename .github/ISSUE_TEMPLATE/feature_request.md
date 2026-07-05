@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Propose a new feature, enhancement, or tool integration for Elo Orgânico.
+about: Propose a new feature, enhancement, or tool integration for CodeCanvas.
 title: "feat([scope]): "
 labels: enhancement, triage
 ---
@@ -17,8 +17,8 @@ A clear and concise description of what you want to happen. Describe the archite
 
 Please specify the affected workspace(s):
 
-- [ ] `instance` (Community Instance)
-- [ ] `portal` (SaaS Platform Portal)
+- [ ] `extension` (Extension)
+- [ ] `studio` (Studio)
 - [ ] `studio` (Design Tokens / Penpot / Assets)
 - [ ] `tools` (MCP servers / automation CLI)
 - [ ] `docs` (Docusaurus Knowledge Base)

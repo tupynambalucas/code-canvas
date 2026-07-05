@@ -1,5 +1,5 @@
 # ==============================================================================
-#  Elo Orgânico - Repository CODEOWNERS
+#  CodeCanvas - Repository CODEOWNERS
 # ==============================================================================
 # This file defines team/user ownership for files and directories in the monorepo.
 # Rules are processed in order, with the last matching rule taking precedence.
@@ -19,11 +19,11 @@
 /pnpm-workspace.yaml                             @tupynambalucas
 /turbo.json                                      @tupynambalucas
 
-# Bounded Workspace: Community Instance (Apps & Core Package)
-/instance/                                       @tupynambalucas
+# Bounded Workspace: VS Code Extension (Apps & Core Package)
+/extension/                                       @tupynambalucas
 
-# Bounded Workspace: SaaS Platform Portal (Apps & Core Package)
-/portal/                                         @tupynambalucas
+# Bounded Workspace: Studio Themes (Apps & Core Package)
+/studio/                                         @tupynambalucas
 
 # Bounded Workspace: Visual Identity & Design System
 /studio/                                         @tupynambalucas

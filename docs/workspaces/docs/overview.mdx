@@ -1,11 +1,11 @@
 ---
-title: Docs Workspace (EloDocs)
+title: Docs Workspace (CodeCanvas Docs)
 sidebar_label: Overview
 sidebar_position: 1
 slug: /docs
 ---
 
-The Docs workspace manages the official documentation hub for the Elo Orgânico project, known as **EloDocs**. Built on Docusaurus, it serves as the central developer portal, housing architectural guidelines, style guides, product planning documents, and automated project changelogs and roadmaps.
+The Docs workspace manages the official documentation hub for the CodeCanvas project, known as **CodeCanvas Docs**. Built on Docusaurus, it serves as the central developer studio, housing architectural guidelines, style guides, product planning documents, and automated project changelogs and roadmaps.
 
 ## Directory Structure
 
@@ -25,7 +25,7 @@ docs/
 
 ## Core Architecture and Custom Plugins
 
-EloDocs is configured with a multi-instance documentation setup using Docusaurus plugins to segment the different areas of the developer portal with independent left sidebars:
+CodeCanvas Docs is configured with a multi-extension documentation setup using Docusaurus plugins to segment the different areas of the developer studio with independent left sidebars:
 
 1.  **General Documentation (Docs)**: Located in `handbook/` and mapped to `/docs`. Governs high-level architectural briefs, security strategies, coding style guides, and master vision files.
 2.  **Strategic Roadmaps (Roadmap)**: Located in `roadmap/` and mapped to `/roadmap`. Governs context-specific milestones and goals.
@@ -34,7 +34,7 @@ EloDocs is configured with a multi-instance documentation setup using Docusaurus
 
 ## Internationalization (i18n)
 
-EloDocs fully supports English (`en`) and Portuguese (`pt-BR`) locales. Localized files mirror the structure of English documents:
+CodeCanvas Docs fully supports English (`en`) and Portuguese (`pt-BR`) locales. Localized files mirror the structure of English documents:
 
 - **General Docs**: `i18n/pt-BR/docusaurus-plugin-content-docs/current/`
 - **Roadmap Docs**: `i18n/pt-BR/docusaurus-plugin-content-docs-roadmap/current/`
@@ -43,19 +43,19 @@ EloDocs fully supports English (`en`) and Portuguese (`pt-BR`) locales. Localize
 
 ## Automated Root Compilers
 
-To maintain clean repository standards, EloDocs integrates with build-time script compiles to write unified markdown documentation at the repository root level on deployment:
+To maintain clean repository standards, CodeCanvas Docs integrates with build-time script compiles to write unified markdown documentation at the repository root level on deployment:
 
 - **`generate-roadmap.ts`**: Aggregates all context files inside `roadmap/` and generates `/ROADMAP.md` at the repository root.
 - **`generate-changelog.ts`**: Parses the release blog posts under `releases/` and generates `/CHANGELOG.md` at the repository root.
-- **CI/CD Integration**: Both compiler scripts run inside the `.github/workflows/deploy-docs.yaml` workflow to ensure root-level files stay 100% in sync with the developer portal.
+- **CI/CD Integration**: Both compiler scripts run inside the `.github/workflows/deploy-docs.yaml` workflow to ensure root-level files stay 100% in sync with the developer studio.
 
 ## Workspace Scripts
 
-Run these commands from the root directory to manage the EloDocs context:
+Run these commands from the root directory to manage the CodeCanvas Docs context:
 
 | Command               | Action                                                                                |
 | :-------------------- | :------------------------------------------------------------------------------------ |
 | `pnpm docs:dev`       | Launches the local Docusaurus development server at `http://localhost:3002`.          |
-| `pnpm docs:build`     | Compiles the production build of the Docusaurus portal (runs link check validations). |
+| `pnpm docs:build`     | Compiles the production build of the Docusaurus studio (runs link check validations). |
 | `pnpm docs:roadmap`   | Manually triggers compiling the modular roadmap documents into the root `ROADMAP.md`. |
 | `pnpm docs:changelog` | Manually triggers compiling the release updates into the root `CHANGELOG.md`.         |

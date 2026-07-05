@@ -6,7 +6,7 @@ sidebar_position: 3
 
 ### Engenharia de Design Self-Hosted
 
-O Elo Orgânico utiliza uma stack do Penpot distribuída integrada com o Aide, um assistente de engenharia AI-native. Esta configuração garante soberania absoluta de dados e sincronização automatizada entre as camadas de design e a base de código.
+O CodeCanvas utiliza uma stack do Penpot distribuída integrada com o Aide, um assistente de engenharia AI-native. Esta configuração garante soberania absoluta de dados e sincronização automatizada entre as camadas de design e a base de código.
 
 #### Arquitetura de Infraestrutura
 
@@ -37,7 +37,7 @@ O Aide funciona como uma ponte Model Context Protocol (MCP), permitindo que agen
 
 ##### Regras Obrigatórias de Manipulação por IA
 
-- **Reutilização de Componentes:** Sempre verifique a biblioteca de componentes existente (Penpot) ou a biblioteca de UI (`instance/apps/web/src/components`) antes de criar novos elementos. O Aide deve priorizar os tokens e componentes existentes do design system.
+- **Reutilização de Componentes:** Sempre verifique a biblioteca de componentes existente (Penpot) ou a biblioteca de UI (`extension/apps/web/src/components`) antes de criar novos elementos. O Aide deve priorizar os tokens e componentes existentes do design system.
 - **Lógica de Tokens Primeiro:** As exportações de design para código devem usar estritamente as propriedades personalizadas do CSS (CSS Custom Properties) derivadas de `src/tokens/` para cores, fontes e espaçamento.
-- **Otimização de SVG:** Certifique-se de que o código SVG exportado está otimizado, segue os padrões de ícones do projeto e está integrado através do registro `@elo-studio/assets/icons`.
+- **Otimização de SVG:** Certifique-se de que o código SVG exportado está otimizado, segue os padrões de ícones do projeto e está integrado através do registro `@codecanvas-studio/assets/icons`.
 - **Hierarquia de Camadas:** A manutenção do agrupamento semântico é obrigatória. Os elementos devem ser organizados em páginas e frames claros (ex: `Layout/Grid`, `Components/Buttons`).

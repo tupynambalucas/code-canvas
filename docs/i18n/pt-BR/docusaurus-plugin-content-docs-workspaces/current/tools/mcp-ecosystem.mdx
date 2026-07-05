@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ### Ecossistema Model Context Protocol (MCP)
 
-O monorepo Elo Orgânico apresenta um ecossistema MCP especializado e conteinerizado. Ele expõe capacidades de desenvolvimento estruturadas e contextos da base de código para clientes LLM (como o Antigravity CLI ou agentes externos) por meio de uma rede de gateway segura e de alto desempenho.
+O monorepo CodeCanvas apresenta um ecossistema MCP especializado e conteinerizado. Ele expõe capacidades de desenvolvimento estruturadas e contextos da base de código para clientes LLM (como o Antigravity CLI ou agentes externos) por meio de uma rede de gateway segura e de alto desempenho.
 
 #### Adaptadores TypeScript Zero-Dependency
 
@@ -24,7 +24,7 @@ Servidores MCP padrão baseados em CLI se comunicam via fluxos de entrada/saída
 
 O servidor MCP do GitHub conecta nosso ambiente de desenvolvimento conteinerizado diretamente à API do GitHub. Ele permite que agentes de IA coordenem tarefas de controle de versão, gerenciem ciclos de vida de issues e realizem pesquisas de código ou revisões automatizadas de pull requests.
 
-- **Upstream:** `http://elo-mcp-github:3001/github/sse`
+- **Upstream:** `http://codecanvas-mcp-github:3001/github/sse`
 
 ##### Registro de Ferramentas e Capacidades
 
@@ -79,7 +79,7 @@ O servidor MCP do GitHub conecta nosso ambiente de desenvolvimento conteinerizad
 
 O servidor MCP Context7 faz a interface com a API Context7 para fornecer pesquisas de documentação em tempo real. Este é um mecanismo de contexto crítico para os agentes de IA consultarem as sintaxes de API mais recentes, padrões de uso e alterações de versão das nossas dependências principais (React 19, Fastify 5, Three.js) sem depender de dados de treinamento de modelo desatualizados.
 
-- **Upstream:** `http://elo-mcp-context7:3002/context7/sse`
+- **Upstream:** `http://codecanvas-mcp-context7:3002/context7/sse`
 
 ##### Registro de Ferramentas e Capacidades
 
@@ -93,9 +93,9 @@ O servidor MCP Context7 faz a interface com a API Context7 para fornecer pesquis
 
 ##### Visão Geral e Utilidade do Projeto
 
-O servidor MCP do Navegador é uma instância do Google Chrome headless gerenciada via Playwright. Ele permite que os agentes de IA interajam diretamente com as interfaces web do projeto, viabilizando verificações de regressão visual, auditoria de erros no console, inspeção da árvore de acessibilidade e análise de requisições de rede em um sandbox totalmente conteinerizado.
+O servidor MCP do Navegador é uma janela do Google Chrome headless gerenciada via Playwright. Ele permite que os agentes de IA interajam diretamente com as interfaces web do projeto, viabilizando verificações de regressão visual, auditoria de erros no console, inspeção da árvore de acessibilidade e análise de requisições de rede em um sandbox totalmente conteinerizado.
 
-- **Upstream:** `http://elo-mcp-browser:3003/browser/sse`
+- **Upstream:** `http://codecanvas-mcp-browser:3003/browser/sse`
 - **Roteamento Host-para-Container:** Reescreve automaticamente as URLs de destino apontando para `localhost` ou `127.0.0.1` para `host.docker.internal` para rotear as requisições com sucesso do container bridge para a máquina host (ex: acessando o Docusaurus na porta 3002 ou a app React na porta 5173).
 
 ##### Registro de Ferramentas e Capacidades
@@ -121,7 +121,7 @@ O servidor MCP do Navegador é uma instância do Google Chrome headless gerencia
 - `browser_handle_dialog`: Aceitar, dispensar ou responder a popups de diálogo nativos do navegador.
 - `browser_evaluate`: Executar código JavaScript personalizado no contexto da página.
 - `browser_run_code_unsafe`: Executar código Node.js arbitrário dentro do sandbox do container.
-- `browser_close`: Fechar a instância do navegador.
+- `browser_close`: fechar a janela do navegador.
 - `browser_resize`: Redimensionar as dimensões do viewport.
 
 </details>
@@ -133,7 +133,7 @@ O servidor MCP do Navegador é uma instância do Google Chrome headless gerencia
 
 O servidor MCP do Docker Hub gerencia interações com o registro do Docker Hub. Ele permite que o sistema descubra imagens, verifique tags e inspecione metadados de repositórios de containers, garantindo que nossa infraestrutura de monorepo permaneça alinhada com as imagens de containers upstream.
 
-- **Upstream:** `http://elo-mcp-dockerhub:3004/dockerhub/sse`
+- **Upstream:** `http://codecanvas-mcp-dockerhub:3004/dockerhub/sse`
 
 ##### Registro de Ferramentas e Capacidades
 

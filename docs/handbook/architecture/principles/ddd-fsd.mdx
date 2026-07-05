@@ -1,6 +1,6 @@
 ---
 title: DDD & Feature-Sliced Design (FSD)
-description: Leveraging Domain-Driven Design (DDD) Bounded Contexts and Feature-Sliced Design (FSD) in Elo Orgânico frontends.
+description: Leveraging Domain-Driven Design (DDD) Bounded Contexts and Feature-Sliced Design (FSD) in CodeCanvas frontends.
 ---
 
 # Domain-Driven Design (DDD) & Feature-Sliced Design (FSD)
@@ -25,11 +25,11 @@ By combining DDD context segregation with FSD layer separation, our applications
 
 ## 2. Project-Specific Utilization
 
-In Elo Orgânico, the combination of DDD and FSD governs both the folder structure and the import rules:
+In CodeCanvas, the combination of DDD and FSD governs both the folder structure and the import rules:
 
 ### A. Bounded Context Segregation
 
-The monorepo is split into distinct contexts (`instance/` and `portal/`) at the root level. These boundaries ensure that community operations (Instance) and global SaaS onboarding workflows (Portal) remain structurally and logically independent. Shared design tokens or brand assets are imported exclusively from the `@elo-studio/assets` workspace.
+The monorepo is split into distinct contexts (`extension/` and `studio/`) at the root level. These boundaries ensure that community operations (Extension) and global SaaS onboarding workflows (studio) remain structurally and logically independent. Shared design tokens or brand assets are imported exclusively from the `@codecanvas-studio/assets` workspace.
 
 ### B. Frontend Layer Hierarchy (FSD)
 

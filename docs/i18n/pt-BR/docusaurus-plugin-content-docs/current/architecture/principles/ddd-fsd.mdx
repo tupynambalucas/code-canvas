@@ -1,6 +1,6 @@
 ---
 title: DDD & Feature-Sliced Design (FSD)
-description: Utilizando os Contextos Delimitados do DDD e o Feature-Sliced Design (FSD) nas aplicações frontend do Elo Orgânico.
+description: Utilizando os Contextos Delimitados do DDD e o Feature-Sliced Design (FSD) nas aplicações frontend do CodeCanvas.
 ---
 
 # Domain-Driven Design (DDD) & Feature-Sliced Design (FSD)
@@ -25,11 +25,11 @@ Ao combinar a segregação de contextos do DDD com a separação de camadas do F
 
 ## 2. Utilização Específica no Projeto
 
-No Elo Orgânico, a combinação de DDD e FSD governa tanto a estrutura de pastas quanto as regras de importação:
+No CodeCanvas, a combinação de DDD e FSD governa tanto a estrutura de pastas quanto as regras de importação:
 
 ### A. Segregação de Contexto Delimitado
 
-O monorepo é dividido em contextos distintos (`instance/` e `portal/`) no nível de workspace. Esses limites garantem que as operações da comunidade (Instância) e os fluxos de integração SaaS globais (Portal) permaneçam estruturalmente e logicamente independentes. Tokens de design ou ativos de marca compartilhados são importados exclusivamente do pacote `@elo-studio/assets`.
+O monorepo é dividido em contextos distintos (`extension/` e `studio/`) no nível de workspace. Esses limites garantem que as operações da comunidade (Extensão) e os fluxos de integração SaaS globais (studio) permaneçam estruturalmente e logicamente independentes. Tokens de design ou ativos de marca compartilhados são importados exclusivamente do pacote `@codecanvas-studio/assets`.
 
 ### B. Hierarquia de Camadas do Frontend (FSD)
 

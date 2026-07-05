@@ -29,7 +29,7 @@ The following rules apply to all documentation tasks, regardless of file extensi
 
 - Always define layout direction explicitly (e.g., `direction TD` or `direction LR`).
 - Use clear node labels wrapped in double quotes (e.g., `node["label"]`) to prevent parser issues with special characters.
-- Use subgraphs to explicitly illustrate Bounded Context boundaries (e.g., separating `instance/` logic from `portal/` logic).
+- Use subgraphs to explicitly illustrate Bounded Context boundaries (e.g., separating `extension/` logic from `studio/` logic).
 - Do not use HTML formatting tags within Mermaid labels; rely on plain Markdown where supported.
 
 ### E. Zero Placeholders

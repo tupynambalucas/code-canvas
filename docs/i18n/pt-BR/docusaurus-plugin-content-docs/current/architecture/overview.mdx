@@ -1,6 +1,6 @@
 ---
 title: Arquitetura Técnica
-description: Visão geral abrangente da estrutura do monorepo do Elo Orgânico, contextos delimitados e stack tecnológica.
+description: Visão geral abrangente da estrutura do monorepo do CodeCanvas, contextos delimitados e stack tecnológica.
 ---
 
 import DocCardList from "@theme/DocCardList";
@@ -9,15 +9,15 @@ import DocCardList from "@theme/DocCardList";
 
 ## 1. Resumo Executivo
 
-O Elo Orgânico é uma plataforma de gestão integrada para ciclos de compartilhamento de produtos orgânicos. O sistema é construído sobre uma arquitetura de **Monorepo** utilizando **PNPM Workspaces** e **Turborepo**, priorizando alta performance, tipagem estrita e isolamento de domínio através de uma estratégia de **Contextos Delimitados (Bounded Contexts)**.
+O CodeCanvas é uma plataforma de gestão integrada para ciclos de compartilhamento de produtos orgânicos. O sistema é construído sobre uma arquitetura de **Monorepo** utilizando **PNPM Workspaces** e **Turborepo**, priorizando alta performance, tipagem estrita e isolamento de domínio através de uma estratégia de **Contextos Delimitados (Bounded Contexts)**.
 
-A arquitetura é projetada para um modelo de **"Plataforma Singleton / Instância Multi-Tenant"**, garantindo que o marketplace global e as operações específicas de cada comunidade sejam desacoplados lógica e fisicamente no nível raiz.
+A arquitetura é projetada para um modelo de **"Plataforma Singleton / Extensão Multi-Tenant"**, garantindo que o marketplace global e as operações específicas de cada comunidade sejam desacoplados lógica e fisicamente no nível raiz.
 
 ---
 
 ## 2. Estrutura do Monorepo & Contextos Delimitados
 
-A base de código do Elo Orgânico é organizada em **Contextos de Domínio** no nível raiz. Para um detalhamento completo dos papéis das aplicações, filosofia de contexto e estruturas de diretórios, consulte a documentação dedicada sobre Contextos Delimitados (Bounded Contexts).
+A base de código do CodeCanvas é organizada em **Contextos de Domínio** no nível raiz. Para um detalhamento completo dos papéis das aplicações, filosofia de contexto e estruturas de diretórios, consulte a documentação dedicada sobre Contextos Delimitados (Bounded Contexts).
 
 <DocCardList
   items={[
@@ -26,7 +26,7 @@ A base de código do Elo Orgânico é organizada em **Contextos de Domínio** no
       href: "./bounded-context",
       label: "Contextos Delimitados & Papéis das Aplicações",
       description:
-        "Explicação detalhada dos Contextos Delimitados, Estrutura do Monorepo e Papéis das Aplicações no Elo Orgânico.",
+        "Explicação detalhada dos Contextos Delimitados, Estrutura do Monorepo e Papéis das Aplicações no CodeCanvas.",
     },
   ]}
 />
@@ -42,7 +42,7 @@ Empregamos uma **Arquitetura Híbrida de Alta Performance** otimizada pelo **Tur
 O **Turborepo** é o motor por trás da nossa produtividade no monorepo. Ele lida com:
 
 - **Grafo de Dependências:** Identifica automaticamente quais pacotes precisam de build ou validação com base em alterações locais.
-- **Acoplamento de Infraestrutura:** Orquestra serviços do Docker Compose como pré-requisitos para o desenvolvimento das aplicações (ex: `pnpm instance:up` inicia bancos de dados antes da API).
+- **Acoplamento de Infraestrutura:** Orquestra serviços do Docker Compose como pré-requisitos para o desenvolvimento das aplicações (ex: `pnpm extension:up` inicia bancos de dados antes da API).
 - **Caching:** Acelera builds, type-checking e lints ao ignorar módulos que não foram alterados.
 - **Outputs Unificados:** Padroniza artefatos de build em `dist/` (para apps e core) e `build/` (para Docusaurus).
 
@@ -69,7 +69,7 @@ Para uma lista de referência completa de scripts de orquestração, comandos de
 
 ## 5. Princípios de Arquitetura
 
-Para garantir extrema manutenibilidade, legibilidade a longo prazo e limites claros entre nossos contextos de domínio, o Elo Orgânico segue quatro princípios de arquitetura fundamentais.
+Para garantir extrema manutenibilidade, legibilidade a longo prazo e limites claros entre nossos contextos de domínio, o CodeCanvas segue quatro princípios de arquitetura fundamentais.
 
 Clique em qualquer cartão abaixo para explorar uma análise detalhada de cada princípio:
 
@@ -151,9 +151,9 @@ Controller -> Service -> Repository -> Model
 Para manter a tipagem estrita e o desacoplamento, os repositórios recebem o modelo Mongoose via injeção de dependência.
 
 ```typescript
-// instance/apps/api/src/domains/auth/auth.repository.ts
+// extension/apps/api/src/domains/auth/auth.repository.ts
 import type { Model } from "mongoose";
-import type { IUser } from "@elo-instance/core";
+import type { IUser } from "@codecanvas/extension";
 
 export class AuthRepository {
   constructor(private readonly userModel: Model<IUser>) {}
@@ -179,7 +179,7 @@ Para evitar stores monolíticas e renderizações desnecessárias no React 19, o
 #### Exemplo de Implementação (Zustand Atomic Selectors)
 
 ```typescript
-// instance/apps/web/src/domains/cart/hooks/useCart.ts
+// extension/apps/web/src/domains/cart/hooks/useCart.ts
 import { useCartStore } from "../cart.store";
 
 // Seletores Atômicos
@@ -218,7 +218,7 @@ Os workspaces de Studio e Tools fornecem a infraestrutura para o alinhamento ent
 
 ## 10. Padrões de Segurança
 
-O Elo Orgânico segue uma estratégia de segurança em múltiplas camadas. Para detalhes de implementação, consulte o documento de **[Arquitetura de Segurança](./security.mdx)**.
+O CodeCanvas segue uma estratégia de segurança em múltiplas camadas. Para detalhes de implementação, consulte o documento de **[Arquitetura de Segurança](./security.mdx)**.
 
 - **Proteção contra Bots**: Integração com Cloudflare Turnstile para todos os pontos de entrada de autenticação.
 - **Mitigação de Brute-Force**: Limitação de taxa baseada em IP e lógica de bloqueio de conta.

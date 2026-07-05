@@ -1,18 +1,18 @@
 ---
 title: Deployment
-description: Production and staging deployment workflows, build-time compilation, environment setups, and self-hosted excellence in Elo Orgânico.
+description: Production and staging deployment workflows, build-time compilation, environment setups, and self-hosted excellence in CodeCanvas.
 sidebar_position: 6
 ---
 
 # Deployment Guide
 
-To ensure high availability, security, and reproducible environments, **Elo Orgânico** utilizes a modern, self-hosted deployment model designed for **Hetzner Cloud** virtual machines. This guide outlines our deployment strategy, environment synchronization, and operational procedures.
+To ensure high availability, security, and reproducible environments, **CodeCanvas** utilizes a modern, self-hosted deployment model designed for **Hetzner Cloud** virtual machines. This guide outlines our deployment strategy, environment synchronization, and operational procedures.
 
 ---
 
 ## 1. Environment Topology & Promotion
 
-The architecture is built on the **"Singleton Platform / Multi-Tenant Instance"** model. Each deployment environment consists of a specific runtime boundary:
+The architecture is built on the **"Singleton Platform / Multi-Tenant Extension"** model. Each deployment environment consists of a specific runtime boundary:
 
 - **Staging (Homologação):** Mirror of the production stack. Runs on a dedicated subdomain connected to a staging database cluster on MongoDB Atlas. Used to validate new feature sets and schema migrations.
 - **Production (Produção):** The authoritative client-facing environment. Fully locked down and optimized for performance.
@@ -24,14 +24,14 @@ graph TD
     end
     subgraph Staging_Env
         StgCompose["docker compose -f compose.prod.yaml --env-file .env.staging"]
-        StgAPI["@elo-instance/api (Staging)"]
-        StgWeb["@elo-instance/web (Staging)"]
+        StgAPI["@codecanvas/extension (Staging)"]
+        StgWeb["@codecanvas/extension (Staging)"]
         StgDB[("MongoDB Atlas (Staging)")]
     end
     subgraph Prod_Env
         ProdCompose["docker compose -f compose.prod.yaml --env-file .env.prod"]
-        ProdAPI["@elo-instance/api (Prod)"]
-        ProdWeb["@elo-instance/web (Prod)"]
+        ProdAPI["@codecanvas/extension (Prod)"]
+        ProdWeb["@codecanvas/extension (Prod)"]
         ProdDB[("MongoDB Atlas (Prod)")]
     end
 
@@ -74,19 +74,19 @@ Never inject sensitive keys (such as JWT secrets, database credentials, or email
 
 Deployments are executed directly on the host machine using our unified root CLI scripts.
 
-Check the [Command Reference](../commands-reference.mdx#instance-community) for more start/stop scenarios.
+Check the [Command Reference](../commands-reference.mdx#extension) for more start/stop scenarios.
 
 ---
 
 ## 4. Reverse Proxying & SSL Termination
 
-Elo Orgânico utilizes a reverse proxy setup (either **Nginx** or **Traefik**) to handle TLS termination, compression, and request routing.
+CodeCanvas utilizes a reverse proxy setup (either **Nginx** or **Traefik**) to handle TLS termination, compression, and request routing.
 
 - **SSL Certificates:** Managed dynamically via Let's Encrypt using automated ACME challenges.
 - **Port Mapping:** The public ports `80` (HTTP) and `443` (HTTPS) map to the edge web containers, which internally forward requests to the Fastify API or serve the compiled static React assets.
 
 :::info[Zero-Downtime Re-Deploys]
-Docker Compose automatically updates containers with minimal downtime when executing `pnpm instance:prod` with existing containers. To completely eliminate request dropouts, implement a rolling deployment pattern utilizing an upstream load balancer.
+Docker Compose automatically updates containers with minimal downtime when executing `pnpm extension:prod` with existing containers. To completely eliminate request dropouts, implement a rolling deployment pattern utilizing an upstream load balancer.
 :::
 
 ---

@@ -1,6 +1,6 @@
 ---
 title: Configuração Herdada
-description: Governança de ferramentas e herança de configurações de nível raiz no monorepo do Elo Orgânico.
+description: Governança de ferramentas e herança de configurações de nível raiz no monorepo do CodeCanvas.
 ---
 
 # Configuração Herdada
@@ -19,7 +19,7 @@ Esta estrutura permite impor padrões rigorosos no nível do monorepo (como form
 
 ## 2. Utilização Específica no Projeto
 
-No Elo Orgânico, todas as ferramentas e configurações são centralmente orquestradas a partir da raiz:
+No CodeCanvas, todas as ferramentas e configurações são centralmente orquestradas a partir da raiz:
 
 ### A. Governança Unificada do ESLint
 
@@ -51,7 +51,7 @@ Os arquivos `tsconfig.json` de nível raiz definem o nível de rigor base do com
 Os workspaces estendem essas configurações compartilhadas através da propriedade `extends`, customizando apenas bibliotecas de tempo de execução específicas ou ambientes de destino (como contextos Node.js vs. DOM/navegador):
 
 ```json
-// instance/apps/web/tsconfig.json
+// extension/apps/web/tsconfig.json
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
