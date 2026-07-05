@@ -1,0 +1,10 @@
+{
+  "changelog": ["@changesets/cli/changelog", { "short": true }],
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "restricted",
+  "baseBranch": "develop",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

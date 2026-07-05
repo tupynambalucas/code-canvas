@@ -4,8 +4,8 @@ on:
   push:
     branches: [develop]
     paths:
-      - "docs/**"
-      - ".github/workflows/deploy-docs.yaml"
+      - 'docs/**'
+      - '.github/workflows/deploy-docs.yaml'
   workflow_dispatch:
 
 permissions:
@@ -13,7 +13,7 @@ permissions:
   deployments: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
         uses: ./.github/actions/setup-pnpm-env
         with:
           node-version: 22
-          frozen-lockfile: "false"
+          frozen-lockfile: 'false'
 
       - name: Generate Global Documents
         run: |
