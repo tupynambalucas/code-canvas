@@ -97,7 +97,7 @@ const config: Config = {
           }
         }
 
-        const hasBucketUrl = bucketUrl !== undefined && bucketUrl !== "";
+        const hasBucketUrl = false; // Temporarily disabled for CodeCanvas: bucketUrl !== undefined && bucketUrl !== "";
 
         const manifestPath =
           require.resolve("@codecanvas-studio/assets/assets-manifest.json");
