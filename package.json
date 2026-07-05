@@ -86,7 +86,10 @@
       "eslint --fix --no-warn-ignored",
       "prettier --write --ignore-path shared/config/.prettierignore"
     ],
-    "*.{json,md,mdx,yaml,yml,css}": [
+    "*.mdx": [
+      "eslint --fix --no-warn-ignored"
+    ],
+    "*.{json,md,yaml,yml,css}": [
       "prettier --write --ignore-path shared/config/.prettierignore"
     ]
   },
