@@ -6,4 +6,6 @@
 **/.eslintcache/**
 **/tools/agents/data/**
 **/tools/agents/shared/**
+**/.vscode-test/**
+**/out/**
 **/.dockerignore

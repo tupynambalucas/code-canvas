@@ -1,29 +1,40 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import fg from "fast-glob";
-import { ColorExtractor } from "./ColorExtractor.mjs";
-import { ThemeResolver } from "./ThemeResolver.mjs";
-import { PackageRegistry } from "./PackageRegistry.mjs";
+import { ColorExtractor } from "./ColorExtractor";
+import {
+  ThemeResolver,
+  type DevTheme,
+  type TemplateData,
+} from "./ThemeResolver";
+
+export interface BuildPaths {
+  DEFAULTS_PATH: string;
+  TEMPLATES_PATH: string;
+  OUTPUT_PATH: string;
+}
 
 export class BuildService {
-  constructor(paths) {
+  private paths: BuildPaths;
+  private extractor: ColorExtractor;
+
+  constructor(paths: BuildPaths) {
     this.paths = paths;
     this.extractor = new ColorExtractor(paths.DEFAULTS_PATH);
-    this.registry = new PackageRegistry(paths.ROOT_PACKAGE_JSON);
   }
 
-  _formatLabel(str) {
+  private _formatLabel(str: string): string {
     return str
       .split(".")
       .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
       .join(" ");
   }
 
-  async run() {
-    console.log("🚀 Iniciando build profissional...");
+  run(): void {
+    // eslint-disable-next-line no-console
+    console.log("🚀 Iniciando build profissional de temas...");
     const themeVariables = this.extractor.extract();
     const resolver = new ThemeResolver(themeVariables);
-    const contributions = [];
 
     if (!fs.existsSync(this.paths.OUTPUT_PATH)) {
       fs.mkdirSync(this.paths.OUTPUT_PATH, { recursive: true });
@@ -34,7 +45,6 @@ export class BuildService {
     );
 
     for (const filePath of themeFiles) {
-      // Lógica de extração de metadados exata do build.mjs original
       const relativeFromDefaults = path.relative(
         this.paths.DEFAULTS_PATH,
         filePath,
@@ -52,20 +62,23 @@ export class BuildService {
         subCategory.charAt(0).toUpperCase() + subCategory.slice(1);
       const formattedColorLabel = this._formatLabel(colorsPart);
 
-      const devTheme = JSON.parse(fs.readFileSync(filePath, "utf8"));
+      const devTheme = JSON.parse(
+        fs.readFileSync(filePath, "utf8"),
+      ) as DevTheme;
       const templatePath = path.join(
         this.paths.TEMPLATES_PATH,
-        `${devTheme.template || "dark"}-template.json`,
+        `${devTheme.template ?? "dark"}-template.json`,
       );
 
       if (!fs.existsSync(templatePath)) {
         continue;
       }
 
-      const templateData = JSON.parse(fs.readFileSync(templatePath, "utf8"));
+      const templateData = JSON.parse(
+        fs.readFileSync(templatePath, "utf8"),
+      ) as TemplateData;
       const generatedTheme = resolver.resolve(templateData, devTheme);
 
-      // Nome e paths exatos
       generatedTheme.name = `${themeNameLabel} (${subCatLabel}) - ${formattedColorLabel}`;
 
       const safeColorId = colorsPart.replace(/\./g, "-");
@@ -74,17 +87,10 @@ export class BuildService {
 
       fs.writeFileSync(outputPath, JSON.stringify(generatedTheme, null, 2));
 
-      contributions.push({
-        id: `codecanvas.${subCategory}-${rawName}-${safeColorId}`,
-        label: generatedTheme.name,
-        uiTheme: generatedTheme.type === "dark" ? "vs-dark" : "vs",
-        path: `./src/themes/${outputFileName}`,
-      });
-
+      // eslint-disable-next-line no-console
       console.log(`✅ Gerado: ${outputFileName}`);
     }
-
-    this.registry.register(contributions);
-    console.log("✨ Build concluída!");
+    // eslint-disable-next-line no-console
+    console.log("✨ Build de temas concluída!");
   }
 }

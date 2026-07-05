@@ -5,7 +5,7 @@ description: Use this skill to create, analyze, or update local and root router 
 
 # Agent Router Expert
 
-This skill defines the standards, structure, design patterns, and validation workflow for `AGENTS.md` context router files in the **Elo Orgânico** monorepo.
+This skill defines the standards, structure, design patterns, and validation workflow for `AGENTS.md` context router files in the **CodeCanvas** monorepo.
 
 ## 1. Global Documentation Standards
 

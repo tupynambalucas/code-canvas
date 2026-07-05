@@ -10,6 +10,6 @@
       "@extension/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "build.ts", ".vscode-test.ts"],
+  "include": ["src/**/*", "build.ts"],
   "exclude": ["node_modules", "dist", "out"]
 }

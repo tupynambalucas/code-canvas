@@ -31,12 +31,14 @@ PENPOT_BUCKET_ACCESS_ID=your_access_key_id
 PENPOT_BUCKET_SECRET_KEY=your_secret_access_key
 ```
 
-### R2 Asset Sync System (Bucket)
+### R2 Asset Sync System (Assets Bucket)
 
-For synchronizing web-ready assets (e.g., icons, textures, images, and raw source archives) directly with Cloudflare R2, configure the environment variables in `studio/bucket/.env.studio.bucket`:
+For synchronizing web-ready assets (e.g., icons, textures, images, and raw source archives)
+directly with Cloudflare R2, configure the environment variables in
+`studio/assets/bucket/.env.studio.bucket`:
 
 ```bash
-# Path: studio/bucket/.env.studio.bucket
+# Path: studio/assets/bucket/.env.studio.bucket
 
 S3_API=https://your-cloudflare-r2-endpoint.r2.cloudflarestorage.com/your-bucket-name
 CLOUDFLARE_R2_ACCESS_KEY_ID=your_access_key_id
@@ -73,7 +75,5 @@ pnpm studio:bucket      # Launch the interactive R2 synchronization menu (Push/P
 ## Directory Structure
 
 - `studio/penpot/`: Docker orchestration and self-hosted Penpot setup.
-- `studio/bucket/`: Cloudflare R2 asset synchronization engine and S3 SDK integration.
-- `studio/assets/sources/`: Raw heavy design vector/binary archives.
-- `studio/src/icons/`: Scoped SVG canonical React icon wrappers.
-- `studio/src/tokens/`: Brand color, typography, and variable design token definitions.
+- `studio/assets/`: Contains assets, logos, icons, tokens, and Cloudflare R2 synchronization.
+- `studio/themes/`: VS Code extension theme generator and template configs.

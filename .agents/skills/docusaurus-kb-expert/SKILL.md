@@ -5,7 +5,7 @@ description: Use this skill to create, analyze, or update technical documentatio
 
 # Docusaurus Knowledge Base Expert
 
-This skill defines the authoritative standards, directory structures, design patterns, and validation workflows for the **Elo Orgânico** Docusaurus Docs Hub (`docs/`).
+This skill defines the authoritative standards, directory structures, design patterns, and validation workflows for the **CodeCanvas** Docusaurus Docs Hub (`docs/`).
 
 ---
 

@@ -1,11 +1,19 @@
 {
   "name": "@codecanvas-studio/themes",
   "version": "1.0.0",
+  "exports": {
+    "./dist/*": "./dist/*"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "node build.mjs",
-    "dev": "node build.mjs --watch"
+    "build": "tsx build.ts",
+    "dev": "tsx build.ts --watch"
   },
   "devDependencies": {
-    "tailwindcss": "catalog:shared-stack"
+    "fast-glob": "catalog:",
+    "tailwindcss": "catalog:shared-stack",
+    "tsx": "catalog:"
   }
 }

@@ -30,15 +30,32 @@
       "isBackground": false
     },
     {
-      "type": "npm",
-      "script": "watch",
-      "problemMatcher": "$tsc-watch",
+      "label": "Extension Watch",
+      "type": "shell",
+      "command": "pnpm --filter @codecanvas/extension watch:build",
+      "problemMatcher": [],
       "isBackground": true,
       "presentation": {
         "reveal": "never"
       },
       "group": {
         "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Extension Test",
+      "type": "shell",
+      "command": "pnpm --filter @codecanvas/extension test",
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "shared",
+        "focus": true,
+        "reveal": "always",
+        "clear": true
+      },
+      "group": {
+        "kind": "test",
         "isDefault": true
       }
     }

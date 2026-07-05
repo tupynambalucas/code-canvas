@@ -59,17 +59,21 @@
         "id": "codecanvas.bleach-yoruichi-dark-purple",
         "label": "Yoruichi (Bleach) - Dark Purple",
         "uiTheme": "vs-dark",
-        "path": "./src/themes/anime.bleach.yoruichi.dark-purple.json"
+        "path": "./dist/themes/anime.bleach.yoruichi.dark-purple.json"
       }
     ]
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
-    "compile": "pnpm run clean && pnpm run typecheck && pnpm run lint && tsx build.ts",
+    "clean": "rimraf dist out tsconfig.tsbuildinfo tsconfig.test.tsbuildinfo",
+    "compile-tests": "tsc -p tsconfig.test.json",
+    "build": "pnpm run clean && pnpm run typecheck && pnpm run lint && tsx build.ts",
+    "compile": "pnpm run build",
     "package": "pnpm run clean && pnpm run typecheck && pnpm run lint && tsx build.ts --production",
-    "pretest": "pnpm run clean && pnpm run compile-tests && pnpm run compile && pnpm run lint",
-    "watch:build": "tsx build.ts --watch",
+    "pretest": "pnpm run build && pnpm run compile-tests",
     "test": "vscode-test",
+    "dev": "pnpm run pretest && vscode-test",
+    "watch:build": "tsx build.ts --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
@@ -80,6 +84,7 @@
   },
   "devDependencies": {
     "@codecanvas-shared/config": "workspace:*",
+    "@codecanvas-studio/themes": "workspace:*",
     "@types/mocha": "catalog:",
     "@types/vscode": "catalog:",
     "@vscode/test-cli": "catalog:",
@@ -89,6 +94,7 @@
     "@vscode/vsce": "catalog:",
     "esbuild": "catalog:",
     "npm-run-all": "catalog:",
+    "rimraf": "catalog:",
     "tsx": "catalog:"
   }
 }

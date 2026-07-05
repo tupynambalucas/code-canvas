@@ -1,0 +1,5 @@
+{
+  "extends": "../../shared/config/tsconfig.base.json",
+  "include": ["src/**/*", "build.ts", "tailwind.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}

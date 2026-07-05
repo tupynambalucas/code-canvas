@@ -8,6 +8,9 @@ This workspace contains the CodeCanvas VS Code Extension core code.
   integration points.
 - The detailed guide for the extension configuration options is in
   [CONFIG.md](./CONFIG.md).
+- Themes must be compiled first inside `@codecanvas-studio/themes`. The build script
+  `build.ts` dynamically registers them into `package.json` contributes and copies
+  them to the `dist/themes/` directory during compilation.
 
 ## Routing
 

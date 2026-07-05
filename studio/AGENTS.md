@@ -8,10 +8,16 @@ This file defines the domain rules, local stack services, and directory structur
 
 Before editing or analyzing design files or brand tokens, read the local rules for the specific workspace:
 
-- **Penpot Collaborative Design**: [penpot/AGENTS.md](./penpot/AGENTS.md) — Self-hosted Penpot setup, S3 bucket mappings, PostgreSQL, and Penpot AI assistant (aide).
-- **Cloudflare R2 Storage Sync**: [bucket/AGENTS.md](./bucket/AGENTS.md) — Dynamic synchronization engine for design assets, vectors, and web-ready vectors with Cloudflare R2 bucket.
-- **Workspace Documentation**: Refer to the studio documentation in [docs/workspaces/studio/overview.mdx](../docs/workspaces/studio/overview.mdx).
-- **Workspace Roadmap**: Refer to the studio roadmap in [docs/roadmap/04-studio.md](../docs/roadmap/04-studio.md).
+- **Penpot Collaborative Design**: [penpot/AGENTS.md](./penpot/AGENTS.md) — Self-hosted Penpot setup, S3
+  bucket mappings, PostgreSQL, and Penpot AI assistant (aide).
+- **Cloudflare R2 Storage Sync**: [assets/AGENTS.md](./assets/AGENTS.md) — Dynamic synchronization engine
+  for design assets, vectors, and web-ready vectors with Cloudflare R2 bucket.
+- **VS Code Extension Themes**: [themes/AGENTS.md](./themes/AGENTS.md) — Custom theme builder,
+  templates, variables, and VS Code extension registry.
+- **Workspace Documentation**: Refer to the studio documentation in
+  [docs/workspaces/studio/overview.mdx](../docs/workspaces/studio/overview.mdx).
+- **Workspace Roadmap**: Refer to the studio roadmap in
+  [docs/roadmap/04-studio.md](../docs/roadmap/04-studio.md).
 
 ---
 

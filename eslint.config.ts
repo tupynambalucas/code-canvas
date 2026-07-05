@@ -2,17 +2,19 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import eslint from "@eslint/js";
-import type { Linter } from "eslint";
 import { defineConfig } from "eslint/config";
-import { fixupPluginRules } from "@eslint/compat";
 import importPlugin from "eslint-plugin-import";
-import reactPlugin from "eslint-plugin-react";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
-import reactRefreshPlugin from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import eslintPluginPrettier from "eslint-plugin-prettier";
 import eslintConfigPrettier from "eslint-config-prettier";
 import * as mdx from "eslint-plugin-mdx";
+
+// Potential future imports (for custom configurations or React integration)
+// import type { Linter } from "eslint";
+// import { fixupPluginRules } from "@eslint/compat";
+// import reactPlugin from "eslint-plugin-react";
+// import reactHooksPlugin from "eslint-plugin-react-hooks";
+// import reactRefreshPlugin from "eslint-plugin-react-refresh";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -324,6 +326,9 @@ export default defineConfig([
       "**/*.d.ts",
       "**/vite-env.d.ts",
       "**/.docusaurus/**",
+      "**/.vscode-test.js",
+      "**/.vscode-test/**",
+      "**/out/**",
     ],
   },
 

@@ -23,9 +23,6 @@
     "incremental": true,
 
     /* Resolução Global de Workspaces */
-    "paths": {
-      "@elo-instance/core": ["../../instance/packages/core/src/index.ts"],
-      "@elo-portal/core": ["../../portal/packages/core/src/index.ts"]
-    }
+    "paths": {}
   }
 }

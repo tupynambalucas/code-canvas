@@ -1,14 +1,17 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 export class ColorExtractor {
-  constructor(srcDir) {
+  private srcDir: string;
+  private variableRegex: RegExp;
+
+  constructor(srcDir: string) {
     this.srcDir = srcDir;
     this.variableRegex = /--([\w-]+):\s*(#[a-fA-F0-9]{3,8})/g;
   }
 
-  extract() {
-    const colors = {};
+  extract(): Record<string, string> {
+    const colors: Record<string, string> = {};
     const cssFiles = this._getFiles(this.srcDir, ".css");
 
     cssFiles.forEach((file) => {
@@ -20,8 +23,8 @@ export class ColorExtractor {
     return colors;
   }
 
-  _getFiles(dir, ext) {
-    let results = [];
+  private _getFiles(dir: string, ext: string): string[] {
+    let results: string[] = [];
     if (!fs.existsSync(dir)) {
       return results;
     }

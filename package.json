@@ -63,6 +63,10 @@
     "github:services:up": "pnpm --filter @codecanvas-tools/github github:services:up",
     "github:services:down": "pnpm --filter @codecanvas-tools/github github:services:down",
     "github:services:reset": "pnpm --filter @codecanvas-tools/github github:services:reset",
+    "// Extension": "---------------------------------------------",
+    "extension:build": "pnpm --filter @codecanvas/extension build",
+    "extension:dev": "pnpm --filter @codecanvas/extension dev",
+    "extension:test": "pnpm --filter @codecanvas/extension test",
     "// CI/CD & Quality": "-------------------------------------------------",
     "format:check": "prettier --check --ignore-path shared/config/.prettierignore .",
     "format:write": "prettier --write --ignore-path shared/config/.prettierignore .",
@@ -76,6 +80,15 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix --no-warn-ignored",
+      "prettier --write --ignore-path shared/config/.prettierignore"
+    ],
+    "*.{json,md,mdx,yaml,yml,css}": [
+      "prettier --write --ignore-path shared/config/.prettierignore"
+    ]
   },
   "dependencies": {
     "fast-glob": "catalog:"
