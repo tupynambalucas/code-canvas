@@ -11,13 +11,13 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration("workbench.colorTheme")) {
-        detectAndApplyThemeBackground();
+        void detectAndApplyThemeBackground();
       }
     }),
   );
 
   // Initial execution on extension activation
-  detectAndApplyThemeBackground();
+  void detectAndApplyThemeBackground();
 
   context.subscriptions.push(
     vscode.commands.registerCommand("codecanvas.install", async () => {

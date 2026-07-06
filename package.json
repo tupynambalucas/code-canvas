@@ -60,6 +60,8 @@
     "github:services:down": "pnpm --filter @codecanvas-tools/github github:services:down",
     "github:services:reset": "pnpm --filter @codecanvas-tools/github github:services:reset",
     "// Extension": "---------------------------------------------",
+    "extension:lint": "pnpm --filter @codecanvas/extension lint",
+    "extension:typecheck": "pnpm --filter @codecanvas/extension typecheck",
     "extension:build": "pnpm --filter @codecanvas/extension build",
     "extension:dev": "pnpm --filter @codecanvas/extension dev",
     "extension:test": "pnpm --filter @codecanvas/extension test",

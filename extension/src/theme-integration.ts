@@ -10,7 +10,7 @@ export async function detectAndApplyThemeBackground() {
   }
 
   const themes = vscode.extensions.all.flatMap((ext) => {
-    const themeContributes = (ext.packageJSON.contributes?.themes ||
+    const themeContributes = (ext.packageJSON.contributes?.themes ??
       []) as any[];
     return themeContributes.map((t) => ({
       ...t,
@@ -36,7 +36,7 @@ export async function detectAndApplyThemeBackground() {
     if (themeJson.backgroundConfig) {
       const config = vscode.workspace.getConfiguration("codecanvas");
       // Correct approach: Get current 'ui' object and update only the background section
-      const ui: any = config.get("ui") || {};
+      const ui: any = config.get("ui") ?? {};
       ui.background = themeJson.backgroundConfig;
 
       // Save the complete 'ui' object

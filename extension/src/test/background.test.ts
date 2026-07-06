@@ -4,7 +4,7 @@ import { AbsPatchGenerator } from "../background/PatchGenerator";
 
 class TestPatchGenerator extends AbsPatchGenerator<{ images: string[] }> {
   public getProcessedImages(): string[] {
-    return this.config.images || [];
+    return this.config.images;
   }
 }
 

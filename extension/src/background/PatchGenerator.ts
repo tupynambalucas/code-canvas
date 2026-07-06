@@ -75,7 +75,7 @@ export abstract class AbsPatchGenerator<T extends { images?: string[] }> {
   protected imageRequired = true;
 
   constructor(config: T) {
-    const images = (config?.images || []).filter((n) => n.length);
+    const images = (config.images ?? []).filter((n) => n.length);
     this.config = {
       ...config,
       images: images.flatMap((img) => {
@@ -134,7 +134,7 @@ export abstract class AbsPatchGenerator<T extends { images?: string[] }> {
   }
 
   protected getPreload() {
-    const images = (this.config.images || []).filter((n) => n.length);
+    const images = (this.config.images ?? []).filter((n) => n.length);
     if (!images.length || images.length > 10) {
       return "";
     }
@@ -246,7 +246,7 @@ export class EditorPatchGenerator extends AbsPatchGenerator<EditorPatchGenerator
     config: EditorPatchGeneratorConfig,
   ): EditorPatchGeneratorConfig {
     // Added optional chaining ?. before .length for safety
-    if (!legacy?.customImages?.length || config?.images?.length) {
+    if (!legacy.customImages.length || config.images.length) {
       return config;
     }
     return { ...legacy, images: legacy.customImages, random: false };
@@ -271,11 +271,11 @@ export class EditorPatchGenerator extends AbsPatchGenerator<EditorPatchGenerator
 
   private get imageStyles() {
     const { images, style, styles, useFront } = this.curConfig;
-    return (images || []).map((img, index) => {
+    return images.map((img, index) => {
       return this.getStyleByOptions(
         {
           ...style,
-          ...((styles && styles[index]) || {}),
+          ...(styles[index] ?? {}),
           "background-image": `url(${img})`,
         },
         useFront,
@@ -298,8 +298,8 @@ export class EditorPatchGenerator extends AbsPatchGenerator<EditorPatchGenerator
           > .monaco-editor-background {
           background: none;
         }
-        ${(images || []).map((_img, index) => {
-          const nthChild = `${(images || []).length}n + ${index + 1}`;
+        ${images.map((_img, index) => {
+          const nthChild = `${images.length}n + ${index + 1}`;
           return css`
             &:nth-child(${nthChild}) .editor-instance > .monaco-editor > .overflow-guard > .monaco-scrollable-element::${frontContent} {
               content: "";
@@ -311,7 +311,7 @@ export class EditorPatchGenerator extends AbsPatchGenerator<EditorPatchGenerator
               transition: 0.3s;
               background-repeat: no-repeat;
               mix-blend-mode: var(${ThemePatchGenerator.cssMixBlendMode});
-              ${this.cssplaceholder + (index % (images || []).length)}: #000;
+              ${this.cssplaceholder + (index % images.length)}: #000;
               ${this.cssplaceholder + "-end"}: #000;
             }
           `;
@@ -322,7 +322,7 @@ export class EditorPatchGenerator extends AbsPatchGenerator<EditorPatchGenerator
 
   protected getScript(): string {
     const { interval, random } = this.curConfig;
-    if (!(this.curConfig.images && this.curConfig.images.length)) {
+    if (!this.curConfig.images.length) {
       return "";
     }
 
@@ -395,7 +395,7 @@ export class FullscreenPatchGenerator<
 
   protected getScript(): string {
     const { images, random, interval } = this.curConfig;
-    if (!(images && images.length)) {
+    if (!images.length) {
       return "";
     }
     return `

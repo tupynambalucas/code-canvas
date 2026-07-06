@@ -28,7 +28,7 @@ export class BackgroundManager implements vscode.Disposable {
   constructor(private context: vscode.ExtensionContext) {
     this.jsFile = new JsPatchFile(vscodePath.jsPath);
 
-    this.checkFirstload();
+    void this.checkFirstload();
     this.registerListeners();
   }
 
@@ -37,7 +37,7 @@ export class BackgroundManager implements vscode.Disposable {
    */
   private get config(): TPatchGeneratorConfig {
     const cfg = vscode.workspace.getConfiguration(EXTENSION_NAME);
-    const ui = cfg.get("ui") || {};
+    const ui = cfg.get("ui") ?? {};
 
     // Legacy property mapping for backward compatibility
     const legacyConfig = {
@@ -92,12 +92,12 @@ export class BackgroundManager implements vscode.Disposable {
 
   private registerListeners() {
     this.disposables.push(
-      vscode.workspace.onDidChangeConfiguration(async (ex) => {
+      vscode.workspace.onDidChangeConfiguration((ex) => {
         const affectsCodeCanvas = ex.affectsConfiguration(EXTENSION_NAME);
         const affectsTheme = ex.affectsConfiguration("workbench.colorTheme");
 
         if (affectsCodeCanvas || affectsTheme) {
-          this.onConfigChange();
+          void this.onConfigChange();
         }
       }),
     );
@@ -147,12 +147,12 @@ export class BackgroundManager implements vscode.Disposable {
     cfg: BackgroundConfig,
   ) {
     const config = vscode.workspace.getConfiguration(EXTENSION_NAME);
-    const ui: any = config.get("ui") || {};
+    const ui: any = config.get("ui") ?? {};
 
     // Maps 'secondaryView' to internal key 'secondarybar'
     const areaKey = area === "secondaryView" ? "secondarybar" : area;
 
-    ui.background = ui.background || {};
+    ui.background = ui.background ?? {};
     ui.background[areaKey] = cfg;
 
     // Updating 'ui' object triggers onDidChangeConfiguration listener
@@ -164,7 +164,7 @@ export class BackgroundManager implements vscode.Disposable {
    */
   async remove(area: string) {
     const config = vscode.workspace.getConfiguration(EXTENSION_NAME);
-    const ui: any = config.get("ui") || {};
+    const ui: any = config.get("ui") ?? {};
     const areaKey = area === "secondaryView" ? "secondarybar" : area;
 
     if (ui.background?.[areaKey]) {
@@ -178,10 +178,10 @@ export class BackgroundManager implements vscode.Disposable {
    */
   async applyFullscreen(cfg: BackgroundConfig) {
     const config = vscode.workspace.getConfiguration(EXTENSION_NAME);
-    const ui: any = config.get("ui") || {};
+    const ui: any = config.get("ui") ?? {};
 
     ui.fullscreen = true;
-    ui.background = ui.background || {};
+    ui.background = ui.background ?? {};
     ui.background.fullscreen = cfg;
 
     await config.update("ui", ui, vscode.ConfigurationTarget.Global);
