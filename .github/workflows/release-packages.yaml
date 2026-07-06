@@ -19,13 +19,13 @@ jobs:
         uses: ./.github/actions/setup-pnpm-env
         with:
           node-version: 22
-          frozen-lockfile: "false"
+          frozen-lockfile: 'false'
 
       - name: Process Bumps and Generate Release PR
-        uses: changeset/action@v3
+        uses: changesets/action@v1
         with:
           version: pnpm version:bump
-          commit: "chore(release): bump package versions and update changelogs"
-          title: "chore(release): version packages"
+          commit: 'chore(release): bump package versions and update changelogs'
+          title: 'chore(release): version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
